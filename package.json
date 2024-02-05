@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "localStart": "nodemon server.ts",
     "start": "nodemon src/server.ts",
     "build": "rimraf dist && tsc",
     "ts.check": "tsc --project tsconfig.json",
