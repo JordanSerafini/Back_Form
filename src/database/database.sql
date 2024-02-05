@@ -27,5 +27,8 @@ CREATE TABLE comment (
   FOREIGN KEY (userID) REFERENCES user(id)
 );
 
+--DELETE FROM user;
+--DELETE FROM question; 
+--DELETE FROM comment;
 
 COMMIT;
