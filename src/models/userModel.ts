@@ -1,6 +1,9 @@
 import Model from "../models/model";
 
 class UserModel extends Model {
+    static getUserByName(name: any) {
+        throw new Error('Method not implemented.');
+    }
     public id: number;
     public name: string;
     public fonction: string;

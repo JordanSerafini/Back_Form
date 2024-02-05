@@ -4,7 +4,7 @@ import Controller from "../controllers/controller";
 // Use router of express
 const router = express.Router();
 
-router.get('/', Controller.insertUser);
+router.post('/insertData', Controller.insertData);
 
 // Export router
 export default router
