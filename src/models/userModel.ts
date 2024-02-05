@@ -1,9 +1,6 @@
 import Model from "../models/model";
 
 class UserModel extends Model {
-    static getUserByName(name: any) {
-        throw new Error('Method not implemented.');
-    }
     public id: number;
     public name: string;
     public fonction: string;
@@ -17,7 +14,24 @@ class UserModel extends Model {
         this.date = date;
     }
 
-    // Méthode pour insérer un user
+    // Méthode pour récupérer un utilisateur par son nom
+    public static async getUserByName(name: string): Promise<UserModel | null> {
+        const sql = 'SELECT * FROM user WHERE name = ?';
+        try {
+            const rows = await this.all(sql, [name]);
+            if (rows && rows.length > 0) {
+                const { id, name, fonction, date } = rows[0];
+                return new UserModel(id, name, fonction, date);
+            } else {
+                return null;
+            }
+        } catch (error) {
+            console.error('Erreur lors de la récupération de l\'utilisateur par nom:', error.message);
+            throw error;
+        }
+    }
+
+    // Méthode pour insérer un utilisateur
     public static async insertUser(name: string, fonction: string, date: Date): Promise<void> {
         const sql = 'INSERT INTO user (name, fonction, date) VALUES (?, ?, ?)';
         try {
@@ -40,7 +54,6 @@ class UserModel extends Model {
             throw error;
         }
     }
-
 }
 
 export default UserModel;

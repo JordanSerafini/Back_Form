@@ -7,14 +7,12 @@ class Controller {
   public static async insertData(req: Request, res: Response): Promise<void> {
     try {
       // Récupérer les données depuis le corps de la requête
-      const { name, fonction, date, questions, comments } = req.body;
+    const { name, fonction, date, questions, comments } = req.body;
 
-      // Insérer l'utilisateur dans la base de données
-      await UserModel.insertUser(name, fonction, date);
-
-      // Récupérer l'ID de l'utilisateur inséré
-      const user: UserModel | null = await UserModel.getUserByName(name);
-      const userId: number | null = user !== null ? user.id : null;
+    
+    // Insérer l'utilisateur dans la base de données
+    const user: UserModel | null = await UserModel.getUserByName(name);
+    const userId: number | null = user !== null ? (user as UserModel).id : null;
 
       if (userId !== null) {
         // Insérer les questions dans la base de données
@@ -44,13 +42,12 @@ class Controller {
           });
       }
     } catch (error) {
-      console.error("Erreur lors de l'insertion des données :", error.message);
-      res
-        .status(500)
-        .json({
-          error:
-            "Erreur lors de l'insertion des données dans la base de données.",
-        });
+        if (error instanceof Error) {
+            console.error("Erreur lors de l'insertion des données :", error.message);
+          } else {
+            console.error("Erreur lors de l'insertion des données :", error);
+          }
+          
     }
   }
 }

@@ -1,4 +1,5 @@
 import sqlite3 from 'sqlite3';
+import sqlite3, { Error } from 'sqlite3';
 
 const databasePath: string = 'db.sqlite';
 
@@ -12,7 +13,7 @@ class Model {
             return this.dbInstance;
         }
 
-        this.dbInstance = new sqlite3.Database(databasePath, (err) => {
+        this.dbInstance = new sqlite3.Database(databasePath, (err: Error | null) => {
             if (err) {
                 console.error('Erreur lors de l\'ouverture de la base de données SQLite:', err.message);
             } else {
