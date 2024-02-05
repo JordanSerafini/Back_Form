@@ -1,5 +1,4 @@
 import sqlite3 from 'sqlite3';
-import sqlite3, { Error } from 'sqlite3';
 
 const databasePath: string = 'db.sqlite';
 
@@ -15,7 +14,7 @@ class Model {
 
         this.dbInstance = new sqlite3.Database(databasePath, (err: Error | null) => {
             if (err) {
-                console.error('Erreur lors de l\'ouverture de la base de données SQLite:', err.message);
+                console.error('Erreur lors de l\'ouverture de la base de données SQLite:');
             } else {
                 console.log('Base de données SQLite connectée avec succès.');
             }
@@ -27,7 +26,7 @@ class Model {
         return new Promise<any>((resolve, reject) => {
             this.getDbInstance().get(sql, params, (err, row) => {
                 if (err) {
-                    console.error('Erreur lors de l\'exécution de la requête SQL:', err.message);
+                    console.error('Erreur lors de l\'exécution de la requête SQL:');
                     reject(err);
                 } else {
                     resolve(row);

@@ -22,24 +22,23 @@ class QuestionModel extends Model {
         try {
             await this.run(sql, [formID, questionID, rating, userID]);
             console.log('Question insérée avec succès.');
-        } catch (error) {
-            console.error('Erreur lors de l\'insertion de la question:', error.message);
+        } catch (error: any) { // Spécifiez explicitement le type 'any' pour l'erreur
+            console.error('Erreur lors de l\'insertion de la question:');
             throw error;
         }
     }
-
+    
     // Méthode pour supprimer une question par son ID
     public static async deleteQuestionById(id: number): Promise<void> {
         const sql = 'DELETE FROM question WHERE id = ?';
         try {
             await this.run(sql, [id]);
             console.log(`Question avec l'ID ${id} supprimée avec succès.`);
-        } catch (error) {
-            console.error(`Erreur lors de la suppression de la question avec l'ID ${id}:`, error.message);
+        } catch (error: any) { // Spécifiez explicitement le type 'any' pour l'erreur
+            console.error(`Erreur lors de la suppression de la question avec l'ID ${id}:`);
             throw error;
         }
     }
-
 }
 
 export default QuestionModel;

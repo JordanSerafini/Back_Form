@@ -26,7 +26,7 @@ class UserModel extends Model {
                 return null;
             }
         } catch (error) {
-            console.error('Erreur lors de la récupération de l\'utilisateur par nom:', error.message);
+            console.error('Erreur lors de la récupération de l\'utilisateur par nom:');
             throw error;
         }
     }
@@ -38,7 +38,7 @@ class UserModel extends Model {
             await this.run(sql, [name, fonction, date]);
             console.log('Utilisateur inséré avec succès.');
         } catch (error) {
-            console.error('Erreur lors de l\'insertion de l\'utilisateur:', error.message);
+            console.error('Erreur lors de l\'insertion de l\'utilisateur:');
             throw error;
         }
     }
@@ -50,7 +50,7 @@ class UserModel extends Model {
             await this.run(sql, [id]);
             console.log(`Utilisateur avec l'ID ${id} supprimé avec succès.`);
         } catch (error) {
-            console.error(`Erreur lors de la suppression de l'utilisateur avec l'ID ${id}:`, error.message);
+            console.error(`Erreur lors de la suppression de l'utilisateur avec l'ID ${id}:`);
             throw error;
         }
     }
