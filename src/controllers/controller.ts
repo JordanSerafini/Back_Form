@@ -19,6 +19,7 @@ class Controller {
       const userId: number | null =
         userFounded !== null ? (userFounded as UserModel).id : null;
 
+        
       if (userId !== null) {
         // Insérer les questions dans la base de données
         for (const question of questions) {
