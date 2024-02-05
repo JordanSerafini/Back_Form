@@ -1,12 +1,16 @@
 import express from "express";
 import router from "./src/routes/routes";
 import dotenv from "dotenv";
+import cors from 'cors';
+
 
 // Setting up environment variables
 dotenv.config();
 
 // Create express application
 const app = express();
+app.use(cors());
+
 
 
 
@@ -19,6 +23,9 @@ app.use(express.static("node_modules"));
 // Middleware is a function that runs between the request and the response
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+
+
+// CORS
 
 
 // Routes settings
