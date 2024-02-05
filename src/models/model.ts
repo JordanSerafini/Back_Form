@@ -1,6 +1,6 @@
 import sqlite3 from 'sqlite3';
 
-const databasePath: string = 'db.sqlite';
+const databasePath: string = 'SLI-FORM.db';
 
 class Model {
     private static dbInstance: sqlite3.Database;
