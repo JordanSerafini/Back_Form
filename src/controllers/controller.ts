@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import FormModel from "../models/Form"
+import Model from "../models/model"
 
 class Controller {
     // Endpoint pour insérer un nouvel utilisateur
@@ -15,7 +15,7 @@ class Controller {
             }
 
             // Insérez l'utilisateur dans la base de données en utilisant le modèle
-            await UserModel.insertUser(name, fonction, date);
+            await Model.insertUser(name, fonction, date);
 
             // Réponse de réussite
             res.status(201).json({ message: 'Utilisateur ajouté avec succès.' });
