@@ -22,7 +22,7 @@ app.use(cors(corsOptions));
 /* ---- Test Connection bdd ----
 const testPool = async () => {
   try {
-    const result = await pool.query('SELECT * FROM question');
+    const result = await pool.query('SELECT * FROM "user"');
     console.log(result.rows);
   } catch (error) {
     console.error('Erreur lors de la récupération des questions:', error);
