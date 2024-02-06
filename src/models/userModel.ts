@@ -1,12 +1,14 @@
 import { pool } from '../database/pool';
+import Model from './model';
 
-class UserModel {
+class UserModel extends Model{
   public id: number;
   public name: string;
   public fonction: string;
   public date: Date;
 
   constructor(id: number, name: string, fonction: string, date: Date) {
+    super();
     this.id = id;
     this.name = name;
     this.fonction = fonction;
@@ -81,6 +83,8 @@ class UserModel {
       throw error;
     }
   }
+
+  
   
 }
 

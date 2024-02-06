@@ -1,6 +1,8 @@
 import { pool } from '../database/pool';
+import Model from './model';
 
-class QuestionModel {
+class QuestionModel extends Model{
+
   public id: number;
   public formID: number;
   public questionID: number;
@@ -8,6 +10,7 @@ class QuestionModel {
   public userID: number;
 
   constructor(id: number, formID: number, questionID: number, rating: number, userID: number) {
+    super();
     this.id = id;
     this.formID = formID;
     this.questionID = questionID;

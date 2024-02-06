@@ -1,5 +1,7 @@
 import express from "express";
 import Controller from "../controllers/controller";
+import AuthController from "../controllers/authController";
+import UserProController from "../controllers/userProController";
 
 // Use router of express
 const router = express.Router();
@@ -7,6 +9,10 @@ const router = express.Router();
 router.get('/', (req, res) => {
     res.send('Hello, World!');
   });
+
+router.post('/login', AuthController.loginWithEmailPassword)
+router.post('/createUser', UserProController.createUser)
+
 
 router.post('/insertData', Controller.insertData);
 router.get('/getData/:id', Controller.getData);

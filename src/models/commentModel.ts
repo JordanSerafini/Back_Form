@@ -1,12 +1,14 @@
 import { pool } from '../database/pool';
+import Model from './model';
 
-class CommentModel {
+class CommentModel extends Model{
   public id: number;
   public formID: number;
   public comment: string;
   public userID: number;
 
   constructor(id: number, formID: number, comment: string, userID: number) {
+    super();
     this.id = id;
     this.formID = formID;
     this.comment = comment;

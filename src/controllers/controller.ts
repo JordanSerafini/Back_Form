@@ -4,6 +4,7 @@ import QuestionModel from "../models/questionModel";
 import UserModel from "../models/userModel";
 
 class Controller {
+  
   public static async insertData(req: Request, res: Response): Promise<void> {
     //console.log(process.env.DATABASE_URL);
     //console.log(typeof process.env.DATABASE_URL);
