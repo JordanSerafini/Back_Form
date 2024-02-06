@@ -55,4 +55,4 @@ class UserProModel extends Model{
 
 }
 
-export default UserModel;
+export default UserProModel;
