@@ -18,8 +18,15 @@ class Model {
                 const { rows } = yield pool_1.pool.query(sql, params);
                 return rows;
             }
-            catch (err) {
-                console.error('Erreur lors de l\'exécution de la requête SQL:', err.message);
+            catch (err) { // Utilisez le type unknown ici.
+                if (err instanceof Error) {
+                    // Maintenant, TypeScript sait que err est une instance d'Error et possède une propriété message.
+                    console.error('Erreur lors de l\'exécution de la requête SQL:', err.message);
+                }
+                else {
+                    // Si ce n'est pas une instance d'Error, log un message générique.
+                    console.error('Une erreur inconnue est survenue lors de l\'exécution de la requête SQL');
+                }
                 throw err;
             }
         });
@@ -31,7 +38,12 @@ class Model {
                 return rows[0];
             }
             catch (err) {
-                console.error('Erreur lors de l\'exécution de la requête SQL:', err.message);
+                if (err instanceof Error) {
+                    console.error('Erreur lors de l\'exécution de la requête SQL:', err.message);
+                }
+                else {
+                    console.error('Une erreur inconnue est survenue lors de l\'exécution de la requête SQL');
+                }
                 throw err;
             }
         });
@@ -48,7 +60,12 @@ class Model {
                 console.log(`Commande SQL exécutée avec succès`);
             }
             catch (err) {
-                console.error("Erreur lors de l'exécution de la commande SQL:", err.message);
+                if (err instanceof Error) {
+                    console.error("Erreur lors de l'exécution de la commande SQL:", err.message);
+                }
+                else {
+                    console.error("Une erreur inconnue est survenue lors de l'exécution de la commande SQL");
+                }
                 throw err;
             }
         });

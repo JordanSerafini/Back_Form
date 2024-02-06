@@ -1,6 +1,5 @@
 import { pool } from '../database/pool';
 
-
 class UserModel {
   public id: number;
   public name: string;
@@ -25,8 +24,12 @@ class UserModel {
       } else {
         return null;
       }
-    } catch (error) {
-      console.error('Erreur lors de la récupération de l\'utilisateur par nom:', error.message);
+    } catch (error: unknown) { // Annoter l'erreur avec le type unknown
+      if (error instanceof Error) {
+        console.error('Erreur lors de la récupération de l\'utilisateur par nom:', error.message);
+      } else {
+        console.error('Une erreur inconnue est survenue lors de la récupération de l\'utilisateur par nom');
+      }
       throw error;
     }
   }
@@ -37,8 +40,12 @@ class UserModel {
     try {
       await pool.query(sql, [name, fonction, date]);
       console.log('Utilisateur inséré avec succès.');
-    } catch (error) {
-      console.error('Erreur lors de l\'insertion de l\'utilisateur:', error.message);
+    } catch (error: unknown) { // Annoter l'erreur avec le type unknown
+      if (error instanceof Error) {
+        console.error('Erreur lors de l\'insertion de l\'utilisateur:', error.message);
+      } else {
+        console.error('Une erreur inconnue est survenue lors de l\'insertion de l\'utilisateur');
+      }
       throw error;
     }
   }
@@ -49,8 +56,12 @@ class UserModel {
     try {
       await pool.query(sql, [id]);
       console.log(`Utilisateur avec l'ID ${id} supprimé avec succès.`);
-    } catch (error) {
-      console.error(`Erreur lors de la suppression de l'utilisateur avec l'ID ${id}:`, error.message);
+    } catch (error: unknown) { // Annoter l'erreur avec le type unknown
+      if (error instanceof Error) {
+        console.error(`Erreur lors de la suppression de l'utilisateur avec l'ID ${id}:`, error.message);
+      } else {
+        console.error(`Une erreur inconnue est survenue lors de la suppression de l'utilisateur avec l'ID ${id}`);
+      }
       throw error;
     }
   }

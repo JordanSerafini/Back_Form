@@ -1,6 +1,5 @@
 import { pool } from '../database/pool';
 
-
 class QuestionModel {
   public id: number;
   public formID: number;
@@ -20,10 +19,14 @@ class QuestionModel {
   public static async insertQuestion(formID: number, questionID: number, rating: number, userID: number): Promise<void> {
     const sql = 'INSERT INTO question (formID, questionID, rating, userID) VALUES ($1, $2, $3, $4)';
     try {
-      const res = await pool.query(sql, [formID, questionID, rating, userID]);
+      await pool.query(sql, [formID, questionID, rating, userID]);
       console.log('Question insérée avec succès.');
-    } catch (error) {
-      console.error('Erreur lors de l\'insertion de la question:', error.message);
+    } catch (error: unknown) { // Utilisez unknown comme type d'erreur.
+      if (error instanceof Error) {
+        console.error('Erreur lors de l\'insertion de la question:', error.message);
+      } else {
+        console.error('Une erreur inconnue est survenue lors de l\'insertion de la question');
+      }
       throw error;
     }
   }
@@ -34,8 +37,12 @@ class QuestionModel {
     try {
       await pool.query(sql, [id]);
       console.log(`Question avec l'ID ${id} supprimée avec succès.`);
-    } catch (error) {
-      console.error(`Erreur lors de la suppression de la question avec l'ID ${id}:`, error.message);
+    } catch (error: unknown) { // Utilisez unknown comme type d'erreur.
+      if (error instanceof Error) {
+        console.error(`Erreur lors de la suppression de la question avec l'ID ${id}:`, error.message);
+      } else {
+        console.error(`Une erreur inconnue est survenue lors de la suppression de la question avec l'ID ${id}`);
+      }
       throw error;
     }
   }

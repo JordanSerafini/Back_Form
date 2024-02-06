@@ -19,8 +19,12 @@ class CommentModel {
     try {
       const res = await pool.query(sql, [formID, commentText, userID]);
       console.log('Commentaire inséré avec succès. ID:', res.rows[0]?.id); 
-    } catch (error) {
-      console.error('Erreur lors de l\'insertion du commentaire:', error.message);
+    } catch (error: unknown) { // Utilisez unknown comme type d'erreur.
+      if (error instanceof Error) {
+        console.error('Erreur lors de l\'insertion du commentaire:', error.message);
+      } else {
+        console.error('Une erreur inconnue est survenue lors de l\'insertion du commentaire');
+      }
       throw error;
     }
   }
@@ -31,8 +35,12 @@ class CommentModel {
     try {
       await pool.query(sql, [id]);
       console.log(`Commentaire avec l'ID ${id} supprimé avec succès.`);
-    } catch (error) {
-      console.error(`Erreur lors de la suppression du commentaire avec l'ID ${id}:`, error.message);
+    } catch (error: unknown) { // Utilisez unknown comme type d'erreur.
+      if (error instanceof Error) {
+        console.error(`Erreur lors de la suppression du commentaire avec l'ID ${id}:`, error.message);
+      } else {
+        console.error(`Une erreur inconnue est survenue lors de la suppression du commentaire avec l'ID ${id}`);
+      }
       throw error;
     }
   }
