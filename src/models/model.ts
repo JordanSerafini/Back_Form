@@ -1,68 +1,45 @@
-import sqlite3 from 'sqlite3';
+import { Pool } from 'pg';
 
-const databasePath: string = 'SLI-FORM.db';
+const pool = new Pool({
+  connectionString: 'postgres://hpyllrbs:wTTx_RHv302SWMHU95MmDqYRtRpYQkUT@tai.db.elephantsql.com/hpyllrbs',
+});
 
 class Model {
-    private static dbInstance: sqlite3.Database;
+  constructor() {}
 
-    constructor() { }
-
-    private static getDbInstance() {
-        if (this.dbInstance) {
-            return this.dbInstance;
-        }
-
-        this.dbInstance = new sqlite3.Database(databasePath, (err: Error | null) => {
-            if (err) {
-                console.error('Erreur lors de l\'ouverture de la base de données SQLite:');
-            } else {
-                console.log('Base de données SQLite connectée avec succès.');
-            }
-        });
-        return this.dbInstance;
+  protected static async query(sql: string, params: any[] = []): Promise<any> {
+    try {
+      const { rows } = await pool.query(sql, params);
+      return rows;
+    } catch (err) {
+      console.error('Erreur lors de l\'exécution de la requête SQL:', err.message);
+      throw err;
     }
+  }
 
-    protected static get(sql: string, params: any[] = []): Promise<any> {
-        return new Promise<any>((resolve, reject) => {
-            this.getDbInstance().get(sql, params, (err, row) => {
-                if (err) {
-                    console.error('Erreur lors de l\'exécution de la requête SQL:');
-                    reject(err);
-                } else {
-                    resolve(row);
-                }
-            });
-        });
+  protected static async get(sql: string, params: any[] = []): Promise<any> {
+    try {
+      const { rows } = await pool.query(sql, params);
+      return rows[0];
+    } catch (err) {
+      console.error('Erreur lors de l\'exécution de la requête SQL:', err.message);
+      throw err;
     }
+  }
 
-    protected static all(sql: string, params: any[] = []): Promise<any[]> {
-        return new Promise<any[]>((resolve, reject) => {
-            this.getDbInstance().all(sql, params, (err, rows) => {
-                if (err) {
-                    console.error('Erreur lors de l\'exécution de la requête SQL:', err.message);
-                    reject(err);
-                } else {
-                    resolve(rows);
-                }
-            });
-        });
+  protected static async all(sql: string, params: any[] = []): Promise<any[]> {
+    return this.query(sql, params);
+  }
+
+  protected static async run(sql: string, params: any[] = []): Promise<void> {
+    try {
+      await pool.query(sql, params);
+      console.log(`Commande SQL exécutée avec succès`);
+    } catch (err) {
+      console.error("Erreur lors de l'exécution de la commande SQL:", err.message);
+      throw err;
     }
-
-    protected static run(sql: string, params: any[] = []): Promise<void> {
-      return new Promise<void>((resolve, reject) => {
-          this.getDbInstance().run(sql, params, function (err) {
-              if (err) {
-                  console.error("Erreur lors de l'exécution de la commande SQL:", err.message);
-                  reject(err);
-              } else {
-                  console.log(`Commande SQL exécutée avec succès, RowID: ${this.lastID}`);
-                  resolve();
-              }
-          });
-      });
   }
 }
-
-
 
 export default Model;

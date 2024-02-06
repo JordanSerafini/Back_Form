@@ -1,0 +1,234 @@
+MODEL: 
+
+
+import sqlite3 from 'sqlite3';
+
+const databasePath: string = 'SLI-FORM.db';
+
+class Model {
+    private static dbInstance: sqlite3.Database;
+
+    constructor() { }
+
+    private static getDbInstance() {
+        if (this.dbInstance) {
+            return this.dbInstance;
+        }
+
+        this.dbInstance = new sqlite3.Database(databasePath, (err: Error | null) => {
+            if (err) {
+                console.error('Erreur lors de l\'ouverture de la base de données SQLite:');
+            } else {
+                console.log('Base de données SQLite connectée avec succès.');
+            }
+        });
+        return this.dbInstance;
+    }
+
+    protected static get(sql: string, params: any[] = []): Promise<any> {
+        return new Promise<any>((resolve, reject) => {
+            this.getDbInstance().get(sql, params, (err, row) => {
+                if (err) {
+                    console.error('Erreur lors de l\'exécution de la requête SQL:');
+                    reject(err);
+                } else {
+                    resolve(row);
+                }
+            });
+        });
+    }
+
+    protected static all(sql: string, params: any[] = []): Promise<any[]> {
+        return new Promise<any[]>((resolve, reject) => {
+            this.getDbInstance().all(sql, params, (err, rows) => {
+                if (err) {
+                    console.error('Erreur lors de l\'exécution de la requête SQL:', err.message);
+                    reject(err);
+                } else {
+                    resolve(rows);
+                }
+            });
+        });
+    }
+
+    protected static run(sql: string, params: any[] = []): Promise<void> {
+      return new Promise<void>((resolve, reject) => {
+          this.getDbInstance().run(sql, params, function (err) {
+              if (err) {
+                  console.error("Erreur lors de l'exécution de la commande SQL:", err.message);
+                  reject(err);
+              } else {
+                  console.log(`Commande SQL exécutée avec succès, RowID: ${this.lastID}`);
+                  resolve();
+              }
+          });
+      });
+  }
+}
+
+
+
+export default Model;
+
+
+
+
+
+
+
+
+
+
+USER:
+import Model from "../models/model";
+
+class UserModel extends Model {
+    public id: number;
+    public name: string;
+    public fonction: string;
+    public date: Date;
+
+    constructor(id: number, name: string, fonction: string, date: Date) {
+        super();
+        this.id = id;
+        this.name = name;
+        this.fonction = fonction;
+        this.date = date;
+    }
+
+    // Méthode pour récupérer un utilisateur par son nom
+    public static async getUserByName(name: string): Promise<UserModel | null> {
+        const sql = 'SELECT * FROM user WHERE name = ?';
+        try {
+            const rows = await this.all(sql, [name]);
+            if (rows && rows.length > 0) {
+                const { id, name, fonction, date } = rows[0];
+                return new UserModel(id, name, fonction, date);
+            } else {
+                return null;
+            }
+        } catch (error) {
+            console.error('Erreur lors de la récupération de l\'utilisateur par nom:');
+            throw error;
+        }
+    }
+
+    // Méthode pour insérer un utilisateur
+    public static async insertUser(name: string, fonction: string, date: Date): Promise<void> {
+        const sql = 'INSERT INTO user (name, fonction, date) VALUES (?, ?, ?)';
+        try {
+            await this.run(sql, [name, fonction, date]);
+            console.log('Utilisateur inséré avec succès.');
+        } catch (error) {
+            console.error('Erreur lors de l\'insertion de l\'utilisateur:');
+            throw error;
+        }
+    }
+
+    // Méthode pour supprimer un utilisateur par son ID
+    public static async deleteUserById(id: number): Promise<void> {
+        const sql = 'DELETE FROM user WHERE id = ?';
+        try {
+            await this.run(sql, [id]);
+            console.log(`Utilisateur avec l'ID ${id} supprimé avec succès.`);
+        } catch (error) {
+            console.error(`Erreur lors de la suppression de l'utilisateur avec l'ID ${id}:`);
+            throw error;
+        }
+    }
+}
+
+export default UserModel;
+
+
+COMMENT:
+import Model from "../models/model";
+
+class CommentModel extends Model {
+    public id: number;
+    public formID: number;
+    public comment: string;
+    public userID: number;
+
+    constructor(id: number, formID: number, comment: string, userID: number) {
+        super();
+        this.id = id;
+        this.formID = formID;
+        this.comment = comment;
+        this.userID = userID;
+    }
+
+    // Méthode pour insérer un commentaire
+    public static async insertComment(formID: number, commentText: string, userID: number): Promise<void> {
+        const sql = 'INSERT INTO comment (formID, comment, userID) VALUES (?, ?, ?)';
+        try {
+            await this.run(sql, [formID, commentText, userID]);
+            console.log('Commentaire inséré avec succès.');
+        } catch (error: any) {
+            console.error('Erreur lors de l\'insertion du commentaire:', error.message);
+            throw error;
+        }
+    }
+
+    public static async deleteCommentById(id: number): Promise<void> {
+        const sql = 'DELETE FROM comment WHERE id = ?';
+        try {
+            await this.run(sql, [id]);
+            console.log(`Commentaire avec l'ID ${id} supprimé avec succès.`);
+        } catch (error: any) {
+            console.error(`Erreur lors de la suppression du commentaire avec l'ID ${id}:`, error.message);
+            throw error;
+        }
+    }
+
+}
+
+export default CommentModel;
+
+
+
+QUESTION:
+import Model from "./model";
+
+class QuestionModel extends Model {
+    public id: number;
+    public formID: number;
+    public questionID: number;
+    public rating: number;
+    public userID: number;
+
+    constructor(id: number, formID: number, questionID: number, rating: number, userID: number) {
+        super();
+        this.id = id;
+        this.formID = formID;
+        this.questionID = questionID;
+        this.rating = rating;
+        this.userID = userID;
+    }
+
+    // Méthode pour insérer une question
+    public static async insertQuestion(formID: number, questionID: number, rating: number, userID: number): Promise<void> {
+        const sql = 'INSERT INTO question (formID, questionID, rating, userID) VALUES (?, ?, ?, ?)';
+        try {
+            await this.run(sql, [formID, questionID, rating, userID]);
+            console.log('Question insérée avec succès.');
+        } catch (error: any) { // Spécifiez explicitement le type 'any' pour l'erreur
+            console.error('Erreur lors de l\'insertion de la question:');
+            throw error;
+        }
+    }
+    
+    // Méthode pour supprimer une question par son ID
+    public static async deleteQuestionById(id: number): Promise<void> {
+        const sql = 'DELETE FROM question WHERE id = ?';
+        try {
+            await this.run(sql, [id]);
+            console.log(`Question avec l'ID ${id} supprimée avec succès.`);
+        } catch (error: any) { // Spécifiez explicitement le type 'any' pour l'erreur
+            console.error(`Erreur lors de la suppression de la question avec l'ID ${id}:`);
+            throw error;
+        }
+    }
+}
+
+export default QuestionModel;
