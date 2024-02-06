@@ -46,6 +46,23 @@ class QuestionModel {
       throw error;
     }
   }
+
+  public static async getQuestionsByUserId(userID: number): Promise<QuestionModel[] | null> {
+    const sql = 'SELECT * FROM question WHERE userID = $1';
+    try {
+      const result = await pool.query(sql, [userID]);
+      const questions: QuestionModel[] = result.rows;
+      return questions;
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error('Erreur lors de la récupération des questions:', error.message);
+      } else {
+        console.error('Une erreur inconnue est survenue lors de la récupération des questions');
+      }
+      throw error;
+    }
+  }
+
 }
 
 export default QuestionModel;

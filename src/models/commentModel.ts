@@ -44,6 +44,23 @@ class CommentModel {
       throw error;
     }
   }
-}
+
+  public static async getCommentsByUserId(userID: number): Promise<CommentModel[] | null> {
+    const sql = 'SELECT * FROM comment WHERE userID = $1';
+    try {
+      const result = await pool.query(sql, [userID]);
+      const comments: CommentModel[] = result.rows;
+      return comments;
+    } catch (error: unknown) { // Utilisez unknown comme type d'erreur.
+      if (error instanceof Error) {
+        console.error('Erreur lors de la récupération des commentaires:', error.message);
+      } else {
+        console.error('Une erreur inconnue est survenue lors de la récupération des commentaires');
+      }
+      throw error;
+    }
+  }
+
+  }
 
 export default CommentModel;
