@@ -1,8 +1,9 @@
 import express from "express";
-import router from "./src/routes/routes";
+import router from "./routes/routes";
 import dotenv from "dotenv";
 import cors from 'cors';
-import { pool } from './src/database/pool';
+import { pool } from './database/pool';
+import { error } from "console";
 
 
 // Setting up environment variables
@@ -11,21 +12,6 @@ dotenv.config();
 // Create express application
 const app = express();
 app.use(cors());
-
-  
-  // Fonction pour tester la connexion à la base de données
-  async function testDatabaseConnection() {
-    try {
-      const test = await pool.query(`SELECT tablename FROM pg_catalog.pg_tables WHERE schemaname != 'pg_catalog' AND schemaname != 'information_schema'`); 
-      console.log(test);
-    } catch (err) {
-      console.error('Échec de la connexion à la base de données:', err.message);
-      process.exit(1); // Arrêter l'application en cas d'échec de la connexion
-    }
-  }
-  
-  // Appeler la fonction de test de connexion
-  testDatabaseConnection();
 
 
 // Setting the middleware to serve static files

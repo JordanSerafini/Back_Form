@@ -37,7 +37,7 @@ class QuestionModel {
     try {
       await pool.query(sql, [id]);
       console.log(`Question avec l'ID ${id} supprimée avec succès.`);
-    } catch (error: unknown) { // Utilisez unknown comme type d'erreur.
+    } catch (error: unknown) {
       if (error instanceof Error) {
         console.error(`Erreur lors de la suppression de la question avec l'ID ${id}:`, error.message);
       } else {
