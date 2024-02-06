@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt'; 
 import { pool } from '../database/pool'; 
+import jwt from 'jsonwebtoken';
 
 class UserProController {
   private static readonly saltRounds: number = 10;
@@ -32,9 +33,17 @@ class UserProController {
   }
 
   public static async getUtilisateurInfo(req: Request, res: Response): Promise<void> {
-    const { email } = req.body;
+    const token = req.headers.authorization?.split(' ')[1]; // Récupérer le token depuis les en-têtes de la requête
+
+    if (!token) {
+      res.status(401).json({ error: 'Token non fourni' });
+      return;
+    }
 
     try {
+      const decodedToken: any = jwt.verify(token, process.env.SECRET_KEY!); 
+      const email = decodedToken.email; // Extrayez l'adresse e-mail du token
+
       const getUserQuery = 'SELECT * FROM utilisateurs WHERE email = $1';
       const getUserResult = await pool.query(getUserQuery, [email]);
 
