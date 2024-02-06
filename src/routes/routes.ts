@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
   });
 
 router.post('/insertData', Controller.insertData);
-router.get('/getData/:userId', Controller.getData);
+router.get('/getData/:id', Controller.getData);
 
 // Export router
 export default router
