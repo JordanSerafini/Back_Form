@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "localStart": "nodemon server.ts",
-    "start": "node src/server.js",
-    "dev": "nodemon src/server.js",
+    "start": "node server.js",
+    "dev": "nodemon server.js",
     "build": "rimraf dist && tsc",
     "ts.check": "tsc --project tsconfig.json",
     "add-build": "git add dist"
