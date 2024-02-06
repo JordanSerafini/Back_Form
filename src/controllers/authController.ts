@@ -18,7 +18,7 @@ class AuthController {
         const user = userResult.rows[0];
 
         // Comparaison du mot de passe fourni avec le mot de passe haché en base de données
-        const passwordMatch = await bcrypt.compare(password, user.mot_de_passe);
+        const passwordMatch = await bcrypt.compare(password, user.password);
 
         if (passwordMatch) {
           // Authentification réussie, générez un JWT avec l'adresse e-mail
