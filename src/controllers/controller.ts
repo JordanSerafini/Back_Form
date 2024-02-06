@@ -68,45 +68,37 @@ class Controller {
 
   public static async getData(req: Request, res: Response): Promise<void> {
     try {
+      // Récupérer l'ID de l'utilisateur à partir des paramètres de requête
+      const userId: number | undefined = parseInt(req.params.id, 10);
 
-      // Récupérer les données depuis le corps de la requête
-      const { user } = req.body;
+      if (isNaN(userId)) {
+        res.status(400).json({ error: "L'ID de l'utilisateur est invalide." });
+        return;
+      }
 
-      const { name } = user;
-      const userFounded: UserModel | null = await UserModel.getUserByName(name);
-      const userId: number | null =
-        userFounded !== null ? (userFounded as UserModel).id : null;
+      const userFounded: UserModel | null = await UserModel.getUserById(userId);
 
-      if (userId !== null) {
-        const questions: QuestionModel[] | null = await QuestionModel.getQuestionsByUserId(
-          userId
-        );
-        const comments: CommentModel[] | null = await CommentModel.getCommentsByUserId(
-          userId
-        );
+      if (userFounded) {
+        const questions: QuestionModel[] | null = await QuestionModel.getQuestionsByUserId(userId);
+        const comments: CommentModel[] | null = await CommentModel.getCommentsByUserId(userId);
 
         res.status(200).json({
+          user: userFounded,
           questions,
           comments,
         });
       } else {
-        console.error(
-          "Erreur lors de la récupération des données : userId est null."
-        );
-        res.status(500).json({
-          error:
-            "Erreur lors de la récupération des données dans la base de données.",
+        console.error("Aucun utilisateur trouvé avec l'ID :", userId);
+        res.status(404).json({
+          error: "Utilisateur non trouvé dans la base de données.",
         });
       }
     } catch (error) {
-      if (error instanceof Error) {
-        console.error(
-          "Erreur lors de la récupération des données :",
-          error.message
-        );
-      } else {
-        console.error("Erreur lors de la récupération des données :", error);
-      }
+      console.error("Erreur lors de la récupération des données :", error);
+
+      res.status(500).json({
+        error: "Erreur lors de la récupération des données dans la base de données.",
+      });
     }
   }
 

@@ -65,6 +65,23 @@ class UserModel {
       throw error;
     }
   }
+
+  public static async getUserById(id: number): Promise<UserModel | null> {
+    const sql = 'SELECT * FROM "user" WHERE id = $1';
+    try {
+      const result = await pool.query(sql, [id]);
+      const user: UserModel | null = result.rows[0] || null;
+      return user;
+    } catch (error: unknown) { // Annoter l'erreur avec le type unknown
+      if (error instanceof Error) {
+        console.error('Erreur lors de la récupération de l\'utilisateur:', error.message);
+      } else {
+        console.error('Une erreur inconnue est survenue lors de la récupération de l\'utilisateur');
+      }
+      throw error;
+    }
+  }
+  
 }
 
 export default UserModel;
