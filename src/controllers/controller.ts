@@ -71,7 +71,7 @@ class Controller {
     try {
       // Récupérer l'ID de l'utilisateur à partir des paramètres de requête
       const userId: number | undefined = parseInt(req.params.id, 10);
-      console.log(userId);
+      //console.log(userId);
 
       if (isNaN(userId)) {
         res.status(400).json({ error: "L'ID de l'utilisateur est invalide." });

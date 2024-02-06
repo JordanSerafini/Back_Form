@@ -6,6 +6,7 @@ class UserProController {
   private static readonly saltRounds: number = 10;
 
   public static async createUser(req: Request, res: Response): Promise<void> {
+    console.log(req.body);
     const { email, password } = req.body;
 
     try {
