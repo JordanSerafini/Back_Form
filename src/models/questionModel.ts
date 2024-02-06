@@ -1,9 +1,5 @@
-import { Pool } from 'pg';
+import { pool } from '../database/pool';
 
-// Assurez-vous que la chaîne de connexion est sécurisée et n'est pas exposée directement dans le code.
-const pool = new Pool({
-  connectionString: 'VotreChaîneDeConnexionPostgreSQL',
-});
 
 class QuestionModel {
   public id: number;

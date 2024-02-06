@@ -1,8 +1,4 @@
-import { Pool } from 'pg';
-
-const pool = new Pool({
-  connectionString: 'postgres://hpyllrbs:wTTx_RHv302SWMHU95MmDqYRtRpYQkUT@tai.db.elephantsql.com/hpyllrbs',
-});
+import { pool } from '../database/pool';
 
 class CommentModel {
   public id: number;

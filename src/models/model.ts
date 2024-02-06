@@ -1,7 +1,7 @@
 import { Pool } from 'pg';
 
 const pool = new Pool({
-  connectionString: 'postgres://hpyllrbs:wTTx_RHv302SWMHU95MmDqYRtRpYQkUT@tai.db.elephantsql.com/hpyllrbs',
+  connectionString: `${process.env.DATABASE_URL}`,
 });
 
 class Model {

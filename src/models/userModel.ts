@@ -1,8 +1,5 @@
-import { Pool } from 'pg';
+import { pool } from '../database/pool';
 
-const pool = new Pool({
-  connectionString: 'VotreChaîneDeConnexionPostgreSQL',
-});
 
 class UserModel {
   public id: number;
@@ -19,7 +16,7 @@ class UserModel {
 
   // Méthode pour récupérer un utilisateur par son nom
   public static async getUserByName(name: string): Promise<UserModel | null> {
-    const sql = 'SELECT * FROM user WHERE name = $1';
+    const sql = 'SELECT * FROM "user" WHERE name = $1';
     try {
       const { rows } = await pool.query(sql, [name]);
       if (rows.length > 0) {
@@ -36,7 +33,7 @@ class UserModel {
 
   // Méthode pour insérer un utilisateur
   public static async insertUser(name: string, fonction: string, date: Date): Promise<void> {
-    const sql = 'INSERT INTO user (name, fonction, date) VALUES ($1, $2, $3)';
+    const sql = 'INSERT INTO "user" (name, fonction, date) VALUES ($1, $2, $3)';
     try {
       await pool.query(sql, [name, fonction, date]);
       console.log('Utilisateur inséré avec succès.');
@@ -48,7 +45,7 @@ class UserModel {
 
   // Méthode pour supprimer un utilisateur par son ID
   public static async deleteUserById(id: number): Promise<void> {
-    const sql = 'DELETE FROM user WHERE id = $1';
+    const sql = 'DELETE FROM "user" WHERE id = $1';
     try {
       await pool.query(sql, [id]);
       console.log(`Utilisateur avec l'ID ${id} supprimé avec succès.`);
