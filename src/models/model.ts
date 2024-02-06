@@ -1,8 +1,5 @@
-import { Pool } from 'pg';
+import { pool } from '../database/pool';
 
-const pool = new Pool({
-  connectionString: `${process.env.DATABASE_URL}`,
-});
 
 class Model {
   constructor() {}
