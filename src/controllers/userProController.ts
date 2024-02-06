@@ -22,7 +22,7 @@ class UserProController {
       const hashedPassword = await bcrypt.hash(password, UserProController.saltRounds);
 
       // Enregistrez l'utilisateur dans la base de données avec le mot de passe haché
-      const insertUserQuery = 'INSERT INTO utilisateurs (email, mot_de_passe) VALUES ($1, $2)';
+      const insertUserQuery = 'INSERT INTO utilisateurs (email, password) VALUES ($1, $2)';
       await pool.query(insertUserQuery, [email, hashedPassword]);
 
       res.status(201).json({ message: 'Utilisateur créé avec succès' });
