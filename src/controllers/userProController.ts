@@ -6,7 +6,6 @@ class UserProController {
   private static readonly saltRounds: number = 10;
 
   public static async createUser(req: Request, res: Response): Promise<void> {
-    console.log('le body:'req.body);
     const { email, password } = req.body;
 
     try {
@@ -28,6 +27,28 @@ class UserProController {
       res.status(201).json({ message: 'Utilisateur créé avec succès' });
     } catch (error) {
       console.error('Erreur lors de la création de l\'utilisateur :', error);
+      res.status(500).json({ error: 'Erreur serveur' });
+    }
+  }
+
+  public static async getUtilisateurInfo(req: Request, res: Response): Promise<void> {
+    const { email } = req.body;
+
+    try {
+      const getUserQuery = 'SELECT * FROM utilisateurs WHERE email = $1';
+      const getUserResult = await pool.query(getUserQuery, [email]);
+
+      if (getUserResult.rows.length === 0) {
+        res.status(404).json({ error: 'Utilisateur non trouvé' });
+        return;
+      }
+
+      const user = getUserResult.rows[0];
+      delete user.password;
+
+      res.status(200).json(user);
+    } catch (error) {
+      console.error('Erreur lors de la récupération des informations de l\'utilisateur :', error);
       res.status(500).json({ error: 'Erreur serveur' });
     }
   }

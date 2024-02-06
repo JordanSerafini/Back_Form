@@ -2,7 +2,7 @@ import { pool } from '../database/pool';
 import Model from './model';
 import bcrypt from 'bcrypt';
 
-class UserModel extends Model{
+class UserProModel extends Model{
   public id: number;
   public email: string;
   public hashedPassword: string; // Stockez le mot de passe haché
@@ -15,13 +15,13 @@ class UserModel extends Model{
   }
 
   // Méthode pour récupérer un utilisateur par son adresse e-mail
-  public static async getUserByEmail(email: string): Promise<UserModel | null> {
+  public static async getUserByEmail(email: string): Promise<UserProModel | null> {
     const sql = 'SELECT * FROM utilisateurs WHERE email = $1';
     try {
       const { rows } = await pool.query(sql, [email]);
       if (rows.length > 0) {
         const { id, email, hashed_password } = rows[0];
-        return new UserModel(id, email, hashed_password);
+        return new UserProModel(id, email, hashed_password);
       } else {
         return null;
       }
@@ -50,6 +50,9 @@ class UserModel extends Model{
       throw error;
     }
   }
+
+  // Méthode pour
+
 }
 
 export default UserModel;
