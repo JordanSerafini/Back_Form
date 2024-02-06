@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import cors from 'cors';
 import { pool } from './database/pool';
 import { error } from "console";
+import test from "node:test";
 
 
 // Setting up environment variables
@@ -18,6 +19,17 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
+/* ---- Test Connection bdd ----
+const testPool = async () => {
+  try {
+    const result = await pool.query('SELECT * FROM question');
+    console.log(result.rows);
+  } catch (error) {
+    console.error('Erreur lors de la récupération des questions:', error);
+  }
+};
+testPool();
+*/
 
 // Setting the middleware to serve static files
 app.use(express.static("public"));
