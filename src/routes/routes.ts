@@ -1,7 +1,7 @@
 import express from "express";
 import Controller from "../controllers/controller";
 import AuthController from "../controllers/authController";
-import UserProController from "src/controllers/userProController";
+import UserProController from "../controllers/userProController";
 
 // Use router of express
 const router = express.Router();
