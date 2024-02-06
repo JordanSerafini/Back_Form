@@ -14,7 +14,7 @@ router.post('/login', AuthController.loginWithEmailPassword)
 
 
 router.post('/createUser', UserProController.createUser)
-router.get('/getUtilisateurInfo', UserProController.getUtilisateurInfo);
+router.post('/getUtilisateurInfo', UserProController.getUtilisateurInfo);
 
 
 router.post('/insertData', Controller.insertData);
