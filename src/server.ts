@@ -2,11 +2,8 @@ import express from "express";
 import router from "./routes/routes";
 import dotenv from "dotenv";
 import cors from 'cors';
-import { pool } from './database/pool';
-import { error } from "console";
-import test from "node:test";
 
-
+const PORT = process.env.PORT || 5000;
 // Setting up environment variables
 dotenv.config();
 
@@ -20,17 +17,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-/* ---- Test Connection bdd ----
-const testPool = async () => {
-  try {
-    const result = await pool.query('SELECT * FROM "user"');
-    console.log(result.rows);
-  } catch (error) {
-    console.error('Erreur lors de la récupération des questions:', error);
-  }
-};
-testPool();
-*/
+
 
 // Setting the middleware to serve static files
 app.use(express.static("public"));
@@ -50,6 +37,6 @@ app.use(express.json());
 app.use("/", router);
 
 // Start the server
-app.listen(process.env.PORT, () => {
-    console.log(`Server is running on port ${process.env.PORT}`);
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });

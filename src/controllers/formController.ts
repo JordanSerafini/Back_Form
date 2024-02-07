@@ -6,7 +6,7 @@ const SECRET_KEY = process.env.SECRET_KEY ;
 
 const formController = {
 validateToken: (req: Request, res: Response) => {
-    const token = req.query.token as string; // TypeScript typage explicite
+    const token = req.query.token as string; 
     if (!token) {
         return res.status(400).json({ isValid: false, error: 'Token manquant' });
     }
