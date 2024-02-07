@@ -26,7 +26,7 @@ class AuthController {
           res.status(200).json({ token });
         } else {
           // Mot de passe incorrect
-          res.status(401).json({ error: 'Mot de passe incorrect' });
+          res.status(401).json({ message: 'Mot de passe incorrect' });
         }
       } else {
         // Utilisateur non trouvé avec cette adresse e-mail
@@ -34,11 +34,11 @@ class AuthController {
       }
     } catch (error) {
       console.error('Erreur lors de la vérification des informations d\'identification :', error);
-      res.status(500).json({ error: 'Erreur serveur' });
+      res.status(500).json({ message: 'Erreur serveur' });
     }
     if (!AuthController.secretKey) {
       console.error('SECRET_KEY n\'est pas défini.');
-      res.status(500).json({ error: 'Erreur de configuration serveur' });
+      res.status(500).json({ message: 'Erreur de configuration serveur' });
       return;
     }
   }
