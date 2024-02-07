@@ -27,7 +27,8 @@ router.get('/getData/:id', Controller.getData);
 
 router.post('/sendForm', supportController.sendForm);
 
-router.get('/form-satisfaction', isToken, formController.formSatisfaction); 
+//router.get('/form-satisfaction', isToken, formController.formSatisfaction); 
+router.get('/validateToken', formController.validateToken);
 
 // Export router
 export default router
