@@ -30,7 +30,7 @@ class AuthController {
         }
       } else {
         // Utilisateur non trouvé avec cette adresse e-mail
-        res.status(401).json({ error: 'Utilisateur non trouvé' });
+        res.status(401).json({ message: 'Utilisateur non trouvé' });
       }
     } catch (error) {
       console.error('Erreur lors de la vérification des informations d\'identification :', error);
