@@ -3,6 +3,8 @@ import Controller from "../controllers/controller";
 import AuthController from "../controllers/authController";
 import UserProController from "../controllers/userProController";
 
+import isAuthMw from "../middleware/isAuth";
+
 // Use router of express
 const router = express.Router();
 
@@ -14,7 +16,7 @@ router.post('/login', AuthController.loginWithEmailPassword)
 
 
 router.post('/createUser', UserProController.createUser)
-router.get('/getUtilisateurInfo', UserProController.getUtilisateurInfo);
+router.get('/getUtilisateurInfo', isAuthMw.isAuth , UserProController.getUtilisateurInfo);
 
 
 router.post('/insertData', Controller.insertData);
