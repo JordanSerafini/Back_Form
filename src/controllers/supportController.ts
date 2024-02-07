@@ -17,7 +17,7 @@ const supportController = {
     //const formLink = `http://localhost:5173/form-satisfaction?token=${token}`;
 
     // Envoyer l'e-mail contenant le lien d'accès à la page de formulaire
-    sgMail.setApiKey(process.env.SENDGRID_API_KEY as string);
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
       const msg = {
         to: email,
         from: "immoprosoclock@gmail.com",

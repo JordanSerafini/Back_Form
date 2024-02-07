@@ -36,6 +36,11 @@ class AuthController {
       console.error('Erreur lors de la vérification des informations d\'identification :', error);
       res.status(500).json({ error: 'Erreur serveur' });
     }
+    if (!AuthController.secretKey) {
+      console.error('SECRET_KEY n\'est pas défini.');
+      res.status(500).json({ error: 'Erreur de configuration serveur' });
+      return;
+    }
   }
 }
 
