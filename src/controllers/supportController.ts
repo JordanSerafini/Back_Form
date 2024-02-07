@@ -7,6 +7,7 @@ const supportController = {
   sendForm: async (req: any, res: any, next: any) => {
     try {
     const { email } = req.body;
+    console.log(email);
 
     // Générer un token JWT avec une durée de validité de 7 jours
     const token = jwt.sign({ email }, process.env.SECRET_KEY!, { expiresIn: '7d' });
