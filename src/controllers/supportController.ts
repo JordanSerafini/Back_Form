@@ -14,6 +14,7 @@ const supportController = {
 
     // Construire le lien d'accès à la page de formulaire avec le token inclus
     const formLink = `${process.env.FRONTEND_URL}/form-satisfaction?token=${token}`;
+    //const formLink = `http://localhost:5173/form-satisfaction?token=${token}`;
 
     // Envoyer l'e-mail contenant le lien d'accès à la page de formulaire
     sgMail.setApiKey(process.env.SENDGRID_API_KEY as string);
