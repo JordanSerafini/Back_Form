@@ -2,6 +2,7 @@
 import jwt from 'jsonwebtoken';
 
 const isToken = (req: any, res:any, next:any) => {
+  
   const token = req.query.token; // Extraire le token de l'URL
   if (!token) return res.sendStatus(401); // Token manquant
 
