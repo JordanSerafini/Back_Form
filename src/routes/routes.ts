@@ -4,6 +4,7 @@ import AuthController from "../controllers/authController";
 import UserProController from "../controllers/userProController";
 import supportController from "../controllers/supportController";
 import formController from "../controllers/formController";
+import customerController from "../controllers/EBP_API/customerController";
 
 import isToken from "../middleware/isToken";
 import isAuthMw from "../middleware/isAuth";
@@ -28,7 +29,8 @@ router.get('/getData/:id', Controller.getData);
 router.post('/sendForm', supportController.sendForm);
 
 //router.get('/form-satisfaction', isToken, formController.formSatisfaction); 
-router.get('/validateToken', formController.validateToken);
+router.get('/validateToken', formController.validateToken);// Export router
 
-// Export router
+router.get('/getAllCustomer', customerController.getAllCustomer);
+
 export default router
