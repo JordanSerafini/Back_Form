@@ -25,18 +25,18 @@ CREATE TABLE IF NOT EXISTS form (
 -- Correction de la table "question"
 CREATE TABLE IF NOT EXISTS question (
   id SERIAL PRIMARY KEY,
-  formID INTEGER NOT NULL REFERENCES "form"(id), --
+  formID INTEGER NOT NULL --REFERENCES "form"(id), --
   questionID INTEGER NOT NULL, 
   rating INTEGER NOT NULL
-  --userID INTEGER NOT NULL REFERENCES "user"(id) 
+  userID INTEGER NOT NULL REFERENCES "user"(id) 
 );
 
 -- Correction de la table "comment"
 CREATE TABLE IF NOT EXISTS comment (
   id SERIAL PRIMARY KEY,
-  formID INTEGER NOT NULL REFERENCES "form"(id),
+  formID INTEGER NOT NULL --REFERENCES "form"(id), --
   comment TEXT NOT NULL
-  --userID INTEGER NOT NULL REFERENCES "user"(id)
+  userID INTEGER NOT NULL REFERENCES "user"(id)
 );
 
 COMMIT;
