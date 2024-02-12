@@ -6,6 +6,7 @@ import supportController from "../controllers/supportController";
 import formController from "../controllers/formController";
 import customerController from "../controllers/EBP_API/customerController";
 import tableController from "../controllers/EBP_API/tableController";
+import itemController from "../controllers/EBP_API/itemController";
 
 import isToken from "../middleware/isToken";
 import isAuthMw from "../middleware/isAuth";
@@ -40,6 +41,8 @@ router.get('/validateToken', formController.validateToken);// Export router
 // EBP API LOCAL
 router.get('/tables', tableController.getAllTables)
 router.get('/getAllCustomer', customerController.getAllCustomer);
+router.get('/item', itemController.getAllItem)
+
 router.get('/test', tableController.test)
 
 export default router
