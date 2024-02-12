@@ -32,7 +32,7 @@ router.get('/getUtilisateurInfo', isAuthMw.isAuth , UserProController.getUtilisa
 
 router.get('/getData/:id', Controller.getData);
 
-router.get('/itemLocal', itemController.getAllitem)
+router.get('/itemCloud', itemController.getAllitem)
 
 router.post('/insertData', Controller.insertData);
 router.post('/sendForm', supportController.sendForm);
