@@ -7,6 +7,7 @@ import formController from "../controllers/formController";
 import customerController from "../controllers/EBP_API/customerController";
 import tableController from "../controllers/EBP_API/tableController";
 import itemController from "../controllers/EBP_API/itemController";
+import swapController from "../controllers/swapController";
 
 import isToken from "../middleware/isToken";
 import isAuthMw from "../middleware/isAuth";
@@ -43,7 +44,7 @@ router.get('/tables', tableController.getAllTables)
 router.get('/getAllCustomer', customerController.getAllCustomer);
 router.get('/item', itemController.getAllItem)
 
-
+router.get('/swap', swapController.fetchDataFromMSSQL)
 router.get('/test', tableController.test)
 
 export default router
