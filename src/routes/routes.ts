@@ -6,8 +6,8 @@ import supportController from "../controllers/supportController";
 import formController from "../controllers/formController";
 import customerController from "../controllers/EBP_API/customerController";
 import tableController from "../controllers/EBP_API/tableController";
-import itemController from "../controllers/EBP_API/itemController";
 import swapController from "../controllers/swapController";
+import itemController from "../controllers/itemController";
 
 import isToken from "../middleware/isToken";
 import isAuthMw from "../middleware/isAuth";
@@ -32,17 +32,20 @@ router.get('/getUtilisateurInfo', isAuthMw.isAuth , UserProController.getUtilisa
 
 router.get('/getData/:id', Controller.getData);
 
-//
+router.get('/itemLocal', itemController.getAllitem)
+
 router.post('/insertData', Controller.insertData);
 router.post('/sendForm', supportController.sendForm);
 
 //router.get('/form-satisfaction', isToken, formController.formSatisfaction); 
 router.get('/validateToken', formController.validateToken);// Export router
 
+
+
 // EBP API LOCAL
 router.get('/tables', tableController.getAllTables)
 router.get('/getAllCustomer', customerController.getAllCustomer);
-router.get('/item', itemController.getAllItem)
+router.get('/item', itemController.getAllitem);
 
 router.get('/swapItem', swapController.fetchAndInsertItem)
 router.get('/swapCustomer', swapController.fetchAndInsertCustomer)
