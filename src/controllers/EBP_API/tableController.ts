@@ -21,7 +21,7 @@ const tableController = {
 
       await client.connectDatabase();
 
-      const query= "SELECT * FROM SaleDocument";
+      const query= "SELECT * FROM EbpSysOptions";
       const tables = await client.executeQuery(query);
 
       res.send(tables);
