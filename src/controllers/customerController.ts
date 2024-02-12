@@ -1,11 +1,11 @@
 import {pool} from "../database/pool";
 
 
-const itemController = {
-    async getAllitem(req: any, res: any) {
+const customerController = {
+    async getAllcustomer(req: any, res: any) {
       try {
   
-        const query= "SELECT * FROM item";
+        const query= "SELECT * FROM customer";
         const tables = await pool.query(query);
 
         res.send(tables);
@@ -19,4 +19,4 @@ const itemController = {
   
   };
   
-  export default itemController;
+  export default customerController;

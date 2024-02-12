@@ -4,10 +4,13 @@ import AuthController from "../controllers/authController";
 import UserProController from "../controllers/userProController";
 import supportController from "../controllers/supportController";
 import formController from "../controllers/formController";
-import customerController from "../controllers/EBP_API/customerController";
+import customerEBPController from "../controllers/EBP_API/customerController";
 import tableController from "../controllers/EBP_API/tableController";
 import swapController from "../controllers/swapController";
 import itemController from "../controllers/itemController";
+import itemEBPController from "../controllers/EBP_API/itemController";
+import cusctomerController from "../controllers/customerController";
+ 
 
 import isToken from "../middleware/isToken";
 import isAuthMw from "../middleware/isAuth";
@@ -26,27 +29,29 @@ router.post('/login', AuthController.loginWithEmailPassword)
 // Route créer utilisateur de l'app
 router.post('/createUser', UserProController.createUser)
 
+
 // Route pour récupérer les info d'un utilisateur
 router.get('/getUtilisateurInfo', isAuthMw.isAuth , UserProController.getUtilisateurInfo);
-
-
 router.get('/getData/:id', Controller.getData);
 
-router.get('/itemCloud', itemController.getAllitem)
+// Route pour récupérer les articles
+router.get('/articlePG', itemController.getAllitem)
+router.get('/customerPG', cusctomerController.getAllcustomer)
 
+// Route Formulaire satisfaction
 router.post('/insertData', Controller.insertData);
 router.post('/sendForm', supportController.sendForm);
 
-//router.get('/form-satisfaction', isToken, formController.formSatisfaction); 
 router.get('/validateToken', formController.validateToken);// Export router
 
 
 
 // EBP API LOCAL
 router.get('/tables', tableController.getAllTables)
-router.get('/getAllCustomer', customerController.getAllCustomer);
-router.get('/item', itemController.getAllitem);
+router.get('/getAllCustomer', customerEBPController.getAllCustomer);
+router.get('/item', itemEBPController.getAllItem);
 
+// Route transfert de données MSSQL vers PGSQL
 router.get('/swapItem', swapController.fetchAndInsertItem)
 router.get('/swapCustomer', swapController.fetchAndInsertCustomer)
 
