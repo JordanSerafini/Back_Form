@@ -44,7 +44,11 @@ router.get('/tables', tableController.getAllTables)
 router.get('/getAllCustomer', customerController.getAllCustomer);
 router.get('/item', itemController.getAllItem)
 
-router.get('/swap', swapController.fetchDataFromMSSQL)
+router.get('/swapItem', swapController.fetchAndInsertItem)
+router.get('/swapCustomer', swapController.fetchAndInsertCustomer)
+
+
+
 router.get('/test', tableController.test)
 
 export default router

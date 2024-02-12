@@ -1,31 +1,20 @@
 import { Request, Response } from 'express';
 import client from '../database/client'; 
 import { pool } from '../database/pool'; 
-import { IRecordSet } from 'mssql';
 
 const swapController = {
-  
-  async fetchDataFromMSSQL(req: Request, res: Response) {
+  async fetchAndInsertItem(req: Request, res: Response) {
+    const clientPG = await pool.connect();
     try {
       await client.connectDatabase();
       const query = `SELECT * FROM item`; 
-      const data = await client.executeQuery(query);
-      return data; 
-    } catch (err) {
-      console.error("Error fetching data from MSSQL:", err);
-      return res.status(500).json({ error: "Internal Server Error" });
-    }
-  },
+      const result = await client.executeQuery(query);
 
-  async insertDataIntoPostgreSQL(req: Request, res: Response) {
-    try {
-      const data = await this.fetchDataFromMSSQL(req, res) as IRecordSet<any>;
+      if (!Array.isArray(result)) {
+        throw new Error('Le résultat n\'est pas un tableau');
+      }
 
-      await pool.connect();
-
-
-      for (const item of data) {
-        // Génération des placeholders et des valeurs pour la requête SQL
+      for (const item of result) {
         const columns = Object.keys(item).join(', ');
         const placeholders = Object.keys(item).map((_, index) => `$${index + 1}`).join(', ');
         const values = Object.values(item);
@@ -34,17 +23,47 @@ const swapController = {
           INSERT INTO item (${columns})
           VALUES (${placeholders})
         `;
-
-        // Exécution de la requête d'insertion
-        await pool.query(insertQuery, values);
+        await clientPG.query(insertQuery, values);
       }
 
-      res.status(201).json({ message: "Data inserted successfully into PostgreSQL" });
-    } catch (error) {
-      console.error("Error inserting data into PostgreSQL:", error);
-      res.status(500).json({ error: "Failed to insert data into PostgreSQL" });
+      res.status(201).json({ message: "Data fetched from MSSQL and inserted into PostgreSQL successfully" });
+    } catch (err) {
+      console.error("Error during data fetch/insert:", err);
+      res.status(500).json({ error: "Failed to fetch from MSSQL or insert into PostgreSQL" });
     } finally {
-      pool.end(); // Assurez-vous de fermer la connexion à la base de données
+      clientPG.release();
+    }
+  },
+
+  async fetchAndInsertCustomer(req: Request, res: Response) {
+    const clientPG = await pool.connect();
+    try {
+      await client.connectDatabase();
+      const query = `SELECT * FROM customer`; 
+      const result = await client.executeQuery(query);
+
+      if (!Array.isArray(result)) {
+        throw new Error('Le résultat n\'est pas un tableau');
+      }
+
+      for (const item of result) {
+        const columns = Object.keys(item).join(', ');
+        const placeholders = Object.keys(item).map((_, index) => `$${index + 1}`).join(', ');
+        const values = Object.values(item);
+
+        const insertQuery = `
+          INSERT INTO customer (${columns})
+          VALUES (${placeholders})
+        `;
+        await clientPG.query(insertQuery, values);
+      }
+
+      res.status(201).json({ message: "Data fetched from MSSQL and inserted into PostgreSQL successfully" });
+    } catch (err) {
+      console.error("Error during data fetch/insert:", err);
+      res.status(500).json({ error: "Failed to fetch from MSSQL or insert into PostgreSQL" });
+    } finally {
+      clientPG.release();
     }
   }
 };
