@@ -4,11 +4,15 @@ import { format } from 'fast-csv';
 
 // Paramètres de connexion à la base de données
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false 
-  }
-});
+    user: 'hpyllrbs',
+    host: 'tai.db.elephantsql.com',
+    database: 'hpyllrbs ',
+    password: 'wTTx_RHv302SWMHU95MmDqYRtRpYQkUT',
+    port: 5432,
+    ssl: {
+      rejectUnauthorized: false 
+    }
+  });
 
 // Chemin du fichier CSV de sortie
 const csvStream = format({ headers: true });
@@ -32,7 +36,7 @@ async function exportToCSV() {
       csvStream.write(row);
     });
   } catch (err) {
-    console.error('Erreur lors de l\'exportation :', err.stack);
+    console.error('Erreur lors de l\'exportation :');
   } finally {
     // Libération du client et fin du flux CSV
     client.release();
