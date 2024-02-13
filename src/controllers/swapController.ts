@@ -2,7 +2,14 @@ import { Request, Response } from 'express';
 import client from '../database/client'; 
 import { pool } from '../database/pool'; 
 
+interface Customer {
+  name: string;
+  maininvoicingcontact_phone: string;
+
+}
+
 const swapController = {
+  
   async fetchAndInsertItem(req: Request, res: Response) {
     const clientPG = await pool.connect();
     try {
@@ -50,26 +57,37 @@ const swapController = {
     const clientPG = await pool.connect();
     try {
       await client.connectDatabase();
-      const query = `SELECT * FROM customer`; 
+      const query = `SELECT * FROM customer`;
       const result = await client.executeQuery(query);
-
+    
       if (!Array.isArray(result)) {
         throw new Error('Le résultat n\'est pas un tableau');
       }
-
+    
+      // Tri des résultats en fonction des propriétés `name` et `maininvoicingcontact_phone`
+      result.sort((a, b) => {
+        // Comparaison insensible à la casse pour `name`
+        const nameCompare = (a.name || "").toLowerCase().localeCompare((b.name || "").toLowerCase());
+        if (nameCompare !== 0) return nameCompare;
+        // Si les noms sont égaux, on compare le `maininvoicingcontact_phone`
+        return (a.maininvoicingcontact_phone || "").toLowerCase().localeCompare((b.maininvoicingcontact_phone || "").toLowerCase());
+      });
+    
       for (const item of result) {
-        const columns = Object.keys(item).join(', ');
+        // Mappez les noms des colonnes de MSSQL (PascalCase) vers PostgreSQL (minuscules)
+        const columns = Object.keys(item).map(key => key.charAt(0).toLowerCase() + key.slice(1)).join(', ');
         const placeholders = Object.keys(item).map((_, index) => `$${index + 1}`).join(', ');
         const values = Object.values(item);
-
+      
         const insertQuery = `
           INSERT INTO customer (${columns})
           VALUES (${placeholders})
         `;
         await clientPG.query(insertQuery, values);
       }
-
-      res.status(201).json({ message: "Data fetched from MSSQL and inserted into PostgreSQL successfully" });
+      
+    
+      res.status(201).json({ message: "Data fetched from MSSQL, sorted by name and phone, and inserted into PostgreSQL successfully" });
     } catch (err) {
       console.error("Error during data fetch/insert:", err);
       res.status(500).json({ error: "Failed to fetch from MSSQL or insert into PostgreSQL" });
@@ -77,6 +95,8 @@ const swapController = {
       clientPG.release();
     }
   }
+  
+  
 };
 
 export default swapController;
