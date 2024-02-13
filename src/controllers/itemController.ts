@@ -5,7 +5,7 @@ const itemController = {
     async getAllitem(req: any, res: any) {
       try {
   
-        const query= "SELECT * FROM item";
+        const query= "SELECT * FROM item ORDER BY id ASC LIMIT 100 ;";
         const tables = await pool.query(query);
 
         res.send(tables);
