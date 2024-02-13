@@ -43,7 +43,7 @@ const swapController = {
     } finally {
       clientPG.release();
     }
-  }
+  },
   
 
   async fetchAndInsertCustomer(req: Request, res: Response) {
