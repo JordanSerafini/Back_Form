@@ -11,6 +11,7 @@ import itemController from "../controllers/itemController";
 import itemEBPController from "../controllers/EBP_API/itemController";
 import cusctomerController from "../controllers/customerController";
 import eventController from "../controllers/eventController";
+import CreateTableController from "../controllers/EBP_API/createTableController";
  
 
 import isToken from "../middleware/isToken";
@@ -57,6 +58,8 @@ router.get('/tables', tableController.getAllTables)
 router.get('/getAllCustomer', customerEBPController.getAllCustomer);
 router.get('/item', itemEBPController.getAllItem);
 router.get('/schedule-event', tableController.getScheduleEvent)
+
+router.get('/createTable', CreateTableController.createTableWithColumns)
 router.get('/test', tableController.test)
 
 

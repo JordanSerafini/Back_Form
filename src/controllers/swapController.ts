@@ -122,41 +122,98 @@ const swapController = {
   },
 
   async fetchAndInsertEvent(req: Request, res: Response) {
-    const clientPG = await pool.connect();
     try {
+        const clientPG = await pool.connect();
+
+        // Connectez-vous à la base de données externe
         await client.connectDatabase();
+
+        // Récupérez les données de l'événement depuis la source externe
         const query = `SELECT * FROM ScheduleEvent`;
         const result = await client.executeQuery(query); 
+
+        // Vérifiez si le résultat est un tableau
         if (!Array.isArray(result)) {
             throw new Error('Le résultat n\'est pas un tableau');
         }
 
-        // Obtenez la liste des colonnes de votre modèle de table "event"
-        const eventColumns = ['caption', 'startdatetime', 'enddatetime', 'expectedduration_durationinhours', 'achievedduration_durationinhours', 'scheduleeventnumber', 'invoicecustomerid', 'dealid', 'colleagueid', 'notesclear', 'xx_type_tache', 'xx_theme', 'expectedduration_duration', 'expectedduration_unitid'];
+        // Récupérez toutes les colonnes de la table ScheduleEvent
+        const allColumns = Object.keys(result[0]);
 
         // Boucle sur les résultats pour les insérer dans la base de données PostgreSQL
         for (const item of result) {
-            // Filtrez les colonnes pour ne prendre en compte que celles qui existent dans votre modèle de table "event"
-            const validColumns = Object.keys(item).filter(column => eventColumns.includes(column.toLowerCase()));
-            const columns = validColumns.join(', ');
-            const placeholders = validColumns.map((_, index) => `$${index + 1}`).join(', ');
-            const values = validColumns.map(column => item[column]);
+            try {
+                // Générer les colonnes et les valeurs à insérer dans la base de données
+                const columns = allColumns.join(', ');
+                const placeholders = allColumns.map((_, index) => `$${index + 1}`).join(', ');
+                const values = allColumns.map(column => item[column]);
 
-            const insertQuery = `
-                INSERT INTO event (${columns})
-                VALUES (${placeholders})
-            `;
-            await clientPG.query(insertQuery, values);
+                const insertQuery = `
+                    INSERT INTO event (${columns})
+                    VALUES (${placeholders})
+                `;
+
+                // Insérez les données dans la base de données PostgreSQL
+                await clientPG.query(insertQuery, values);
+            } catch (error) {
+                // En cas d'erreur lors de l'insertion, affichez l'erreur et les données problématiques
+                console.error("Erreur lors de l'insertion d'une ligne :", error);
+                console.log("Données problématiques :", item);
+            }
         }
 
-        res.status(201).json({ message: "Data fetched from external source and inserted into PostgreSQL successfully" });
+        // Répondez avec un message de succès si tout se passe bien
+        res.status(201).json({ message: "Les données ont été récupérées depuis la source externe et insérées dans PostgreSQL avec succès." });
     } catch (err) {
-        console.error("Error during data fetch/insert:", err);
-        res.status(500).json({ error: "Failed to fetch data from external source or insert into PostgreSQL" });
+        // En cas d'erreur, affichez l'erreur et répondez avec un code d'erreur HTTP 500
+        console.error("Erreur lors de la récupération/insertion des données :", err);
+        res.status(500).json({ error: "Échec de la récupération des données depuis la source externe ou de l'insertion dans PostgreSQL." });
     } finally {
-        clientPG.release();
+      // Assurez-vous de libérer la connexion du pool PostgreSQL
+      //await pool.release(clientPG);
     }
 }
+
+
+
+/*
+async fetchAndInsertEvent(req: Request, res: Response) {
+  const clientPG = await pool.connect();
+  try {
+      await client.connectDatabase();
+      const query = `SELECT * FROM ScheduleEvent`;
+      const result = await client.executeQuery(query); 
+      if (!Array.isArray(result)) {
+          throw new Error('Le résultat n\'est pas un tableau');
+      }
+
+      // Obtenez la liste des colonnes de votre modèle de table "event"
+      const eventColumns = ['caption', 'startdatetime', 'enddatetime', 'expectedduration_durationinhours', 'achievedduration_durationinhours', 'scheduleeventnumber', 'invoicecustomerid', 'dealid', 'colleagueid', 'notesclear', 'xx_type_tache', 'xx_theme', 'expectedduration_duration', 'expectedduration_unitid'];
+
+      // Boucle sur les résultats pour les insérer dans la base de données PostgreSQL
+      for (const item of result) {
+          // Filtrez les colonnes pour ne prendre en compte que celles qui existent dans votre modèle de table "event"
+          const validColumns = Object.keys(item).filter(column => eventColumns.includes(column.toLowerCase()));
+          const columns = validColumns.join(', ');
+          const placeholders = validColumns.map((_, index) => `$${index + 1}`).join(', ');
+          const values = validColumns.map(column => item[column]);
+
+          const insertQuery = `
+              INSERT INTO event (${columns})
+              VALUES (${placeholders})
+          `;
+          await clientPG.query(insertQuery, values);
+      }
+
+      res.status(201).json({ message: "Data fetched from external source and inserted into PostgreSQL successfully" });
+  } catch (err) {
+      console.error("Error during data fetch/insert:", err);
+      res.status(500).json({ error: "Failed to fetch data from external source or insert into PostgreSQL" });
+  } finally {
+      clientPG.release();
+  }
+}
+*/
 
 
 
