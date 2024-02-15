@@ -4,7 +4,7 @@ const eventController = {
     async getAllevent(req: any, res: any) {
       try {
   
-        const query= "SELECT * FROM event ORDER BY date ASC;";
+        const query= "SELECT * FROM event ORDER BY startdatetime ASC;";
         const tables = await pool.query(query);
 
         res.send(tables);
