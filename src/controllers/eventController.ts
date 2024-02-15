@@ -19,7 +19,7 @@ const eventController = {
     try {
       const { caption, startDateTime, endDateTime, expectedDuration, achievedDuration, colleagueId, notesClear, xx_type_tache } = req.body;
   
-      const query = `INSERT INTO event (caption, startdatetime, enddatetime, expectedduration_durationinhours, achievedduration_durationinhours, colleagueId, notesclear, xx_type_tache)
+      const query = `INSERT INTO event (Caption, StartDateTime, EndDateTime, ExpectedDuration_DurationInHours, AchievedDuration_DurationInHours, ColleagueId, NotesClear, xx_Type_Tache)
         VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`;
   
       const values = [caption, startDateTime, endDateTime, expectedDuration, achievedDuration, colleagueId, notesClear, xx_type_tache];
