@@ -32,6 +32,20 @@ const eventController = {
     }
   },
 
+  async deleteEvent(req: any, res: any) {
+    try {
+      const { id } = req.params;
+  
+      const query = "DELETE FROM event WHERE id = $1";
+      const values = [id];
+  
+      await pool.query(query, values);
+      res.send("Evenement supprimé avec succès");
+    } catch (err) {
+      console.log(err);
+      res.status(500).send("Erreur lors de la suppression de l'événement.");
+    }
+  },
 };
   
   
