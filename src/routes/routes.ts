@@ -50,6 +50,9 @@ router.get('/validateToken', formController.validateToken);// Export router
 router.get('/tables', tableController.getAllTables)
 router.get('/getAllCustomer', customerEBPController.getAllCustomer);
 router.get('/item', itemEBPController.getAllItem);
+router.get('/schedule-event', tableController.getScheduleEvent)
+router.get('/test', tableController.test)
+
 
 // Route transfert de données MSSQL vers PGSQL
 router.get('/swapItem', swapController.fetchAndInsertItem)
