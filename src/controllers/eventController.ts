@@ -15,7 +15,20 @@ const eventController = {
       }
   },
   
+  async insertEvent(req: any, res: any) {
+    try {
+      const { caption, startdatetime, enddatetime, expectedduration_durationinhours, achievedduration_durationinhours, colleagueId, notesclear, xx_type_tache } = req.body;
+      const query = `INSERT INTO event (Caption, StartDateTime, EndDateTime, ExpectedDuration_DurationInHours, AchievedDuration_DurationInHours, ColleagueId, NotesClear, xx_Type_Tache)
+      VALUES ('${caption}', '${startdatetime}', '${enddatetime}', ${expectedduration_durationinhours}, ${achievedduration_durationinhours}, '${colleagueId}', '${notesclear}', '${xx_type_tache}')`;
+      await pool.query(query);
+      res.send("Evenement ajouté avec succès");
+    } catch (err) {
+      console.log(err);
+      res.status(500).send("Erreur lors de l'ajout de l'événement.");
+    }
+  },
+
+};
   
-  };
   
   export default eventController;

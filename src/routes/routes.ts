@@ -46,6 +46,7 @@ router.post('/sendForm', supportController.sendForm);
 
 // Route pour récupérer les Events
 router.get('/event', eventController.getAllevent)
+router.post('/insertEvent', eventController.insertEvent)
 
 
 // Route pour vérifier le token
