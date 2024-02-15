@@ -10,6 +10,7 @@ import swapController from "../controllers/swapController";
 import itemController from "../controllers/itemController";
 import itemEBPController from "../controllers/EBP_API/itemController";
 import cusctomerController from "../controllers/customerController";
+import eventController from "../controllers/eventController";
  
 
 import isToken from "../middleware/isToken";
@@ -42,7 +43,12 @@ router.get('/customerPG', cusctomerController.getAllcustomer)
 router.post('/insertData', Controller.insertData);
 router.post('/sendForm', supportController.sendForm);
 
-router.get('/validateToken', formController.validateToken);// Export router
+// Route pour récupérer les Events
+router.get('/event', eventController.getAllevent)
+
+
+// Route pour vérifier le token
+router.get('/validateToken', formController.validateToken);
 
 
 
@@ -57,6 +63,8 @@ router.get('/test', tableController.test)
 // Route transfert de données MSSQL vers PGSQL
 router.get('/swapItem', swapController.fetchAndInsertItem)
 router.get('/swapCustomer', swapController.fetchAndInsertCustomer)
+router.get('/swapEvent', swapController.fetchAndInsertEvent)
+
 
 
 

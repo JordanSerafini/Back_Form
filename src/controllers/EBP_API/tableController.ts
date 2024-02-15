@@ -38,7 +38,7 @@ const tableController = {
 
       await client.connectDatabase();
 
-      const query= "SELECT * FROM ScheduleEventExpectedResource  ";
+      const query= "SELECT * FROM ScheduleEvent  ";
       const tables = await client.executeQuery(query);
 
       res.send(tables);
