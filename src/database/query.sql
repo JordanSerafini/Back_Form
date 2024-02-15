@@ -24,3 +24,15 @@ JOIN "user" u ON c.userID = u.id;
 SELECT u.id AS user_id, u.name AS user_name, u.fonction, q.questionID, q.rating
 FROM "user" u
 JOIN question q ON u.id = q.userID;
+
+
+SELECT
+    column_name,
+    data_type,
+    character_maximum_length,
+    column_default,
+    is_nullable
+FROM
+    information_schema.columns
+WHERE
+    table_name = 'event';
