@@ -17,10 +17,14 @@ const eventController = {
 
   async insertEvent(req: any, res: any) {
     try {
-      const { caption, startdatetime, enddatetime, expectedduration_durationinhours, achievedduration_durationinhours, colleagueId, notesclear, xx_type_tache } = req.body;
+      const { caption, startDateTime, endDateTime, expectedDuration, achievedDuration, colleagueId, notesClear, xx_type_tache } = req.body;
+  
       const query = `INSERT INTO event (caption, startdatetime, enddatetime, expectedduration_durationinhours, achievedduration_durationinhours, colleagueId, notesclear, xx_type_tache)
-      VALUES ('${caption}', '${startdatetime}', '${enddatetime}', ${expectedduration_durationinhours}, ${achievedduration_durationinhours}, '${colleagueId}', '${notesclear}', '${xx_type_tache}')`;
-      await pool.query(query);
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`;
+  
+      const values = [caption, startDateTime, endDateTime, expectedDuration, achievedDuration, colleagueId, notesClear, xx_type_tache];
+  
+      await pool.query(query, values);
       res.send("Evenement ajouté avec succès");
     } catch (err) {
       console.log(err);
