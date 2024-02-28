@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS "user" (
 CREATE TABLE IF NOT EXISTS utilisateur (
   id SERIAL PRIMARY KEY,
   name TEXT NOT NULL,
-  email TEXT UNIQUE NOT NULL, -- Assure l'unicité des emails
+  email TEXT UNIQUE NOT NULL, 
   password TEXT NOT NULL
 ); 
 
@@ -38,5 +38,22 @@ CREATE TABLE IF NOT EXISTS comment (
   comment TEXT NOT NULL
   userID INTEGER NOT NULL REFERENCES "user"(id)
 );
+
+-- Devis et table liaisons
+CREATE TABLE devis (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255),
+    userID INTEGER,
+    FOREIGN KEY (userID) REFERENCES utilisateur(id)
+);
+
+CREATE TABLE devis_items (
+    devisID INTEGER,
+    itemID INTEGER,
+    FOREIGN KEY (devisID) REFERENCES devis(id),
+    FOREIGN KEY (itemID) REFERENCES item(IDperso)
+);
+
+
 
 COMMIT;

@@ -38,6 +38,8 @@ router.get('/getData/:id', Controller.getData);
 
 // Route pour récupérer les articles
 router.get('/articlePG', itemController.getAllitem)
+//Route pour créer un article
+router.post('/insertItem', itemController.insertItem)
 
 
 // ##################################### clients / customers ##################################### //
