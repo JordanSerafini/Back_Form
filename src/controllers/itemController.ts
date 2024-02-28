@@ -16,7 +16,7 @@ const itemController = {
       }
   },
 
-  async insertItem(articleData) {
+  async insertItem(articleData: { caption: any; salepriceVatExcluded: any; salepricevatincluded: any; realstock: any; descomclear: any; image_url: any; uniqueid: any; familyid: any; notesclear: any; supplierid: any; itemtype: any; itemimage: any; unitid: any; }) {
     const {
       caption,
       salepriceVatExcluded,
