@@ -20,12 +20,8 @@ const customerController = {
   async insertCoordinate(req: any, res: any) {
 
     try {
-      const { id, adresse } = req.body;
-      const { error, longitude, latitude } = await coordinateService.getAdressCoordinate(adresse);
-      if (error) {
-        res.status(500).send
-        return;
-      }
+      const { id, longitude, latitude } = req.body;
+      
       const query = `UPDATE customer SET longitude = $1, latitude = $2 WHERE id = $3;`;
       const values = [longitude, latitude, id];
       await pool.query(query, values);
