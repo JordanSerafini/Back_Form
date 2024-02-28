@@ -16,10 +16,10 @@ const itemController = {
       }
   },
 
-  async insertItem(articleData: { caption: any; salepriceVatExcluded: any; salepricevatincluded: any; realstock: any; descomclear: any; image_url: any; uniqueid: any; familyid: any; notesclear: any; supplierid: any; itemtype: any; itemimage: any; unitid: any; }) {
+  async insertItem(articleData: { caption: string; salepricevatexcluded: any; salepricevatincluded: any; realstock: any; descomclear: any; image_url: any; uniqueid: any; familyid: any; notesclear: any; supplierid: any; itemtype: any; itemimage: any; unitid: any; }) {
     const {
       caption,
-      salepriceVatExcluded,
+      salepricevatexcluded,
       salepricevatincluded, 
       realstock,
       descomclear, 
@@ -38,7 +38,7 @@ const itemController = {
   
     const values = [
       caption,
-      salepriceVatExcluded,
+      salepricevatexcluded,
       salepricevatincluded,
       realstock,
       descomclear,
