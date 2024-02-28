@@ -38,7 +38,13 @@ router.get('/getData/:id', Controller.getData);
 
 // Route pour récupérer les articles
 router.get('/articlePG', itemController.getAllitem)
+
+
+// ##################################### clients / customers ##################################### //
+// Route pour récupérer les clients
 router.get('/customerPG', cusctomerController.getAllcustomer)
+//Route pour insérer les coordonnées
+router.post('/insertCoordinate', cusctomerController.insertCoordinate)
 
 // Route Formulaire satisfaction
 router.post('/insertData', Controller.insertData);
