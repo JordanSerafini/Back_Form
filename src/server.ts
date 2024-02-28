@@ -11,7 +11,7 @@ dotenv.config();
 const app = express();
 
 const corsOptions = {
-  origin: ["http://localhost:5173", "https://sli-form.netlify.app", "https://sli-app.netlify.app", "http://localhost:5173"]
+  origin: ["http://localhost:5173", "https://sli-form.netlify.app", "https://sli-app.netlify.app"]
 };
 
 
