@@ -1,0 +1,181 @@
+EbpSysOptions : Options du système EBP
+EbpSysReportTagAssociation : Association de tags de rapport du système EBP
+LoyaltyCalculationLine : Ligne de calcul de fidélité
+EbpSysNavBarTemplate : Modèle de barre de navigation du système EBP
+StockItem : Article en stock
+DealContact : Contact d'affaire
+Disbursement : Déboursement
+PurchaseDocumentComplementaryDiscount : Remise complémentaire sur document d'achat
+DocumentSerial : Série de documents
+ConstructionSiteReferenceDocumentEx : Document de référence de chantier (extension)
+PurchaseDocumentLineAnalyticAffectation : Affectation analytique de ligne de document d'achat
+States : États
+EbpSysUserConnection : Connexion utilisateur du système EBP
+StockDocument : Document de stock
+MaintenanceContractCost : Coût de contrat de maintenance
+SaleSettlement : Règlement de vente
+AnalyticGrid : Grille analytique
+DealPurchaseSettlement : Règlement d'achat d'affaire
+ActivityAssociatedFiles : Fichiers associés à l'activité
+PosTerminalOpenCloseItemFamilyDetail : Détail de famille d'articles à l'ouverture/fermeture de terminal de point de vente
+Contact : Contact
+ExecutionQuoteLineExtraFeeDistribution : Distribution des frais supplémentaires de ligne de devis d'exécution
+EbpSysExchangeLog : Journal d'échange du système EBP
+ScheduleEventTemplateExpectedResource : Ressource attendue pour modèle d'événement planifié
+ScheduleEventOutlookSynchronization : Synchronisation Outlook d'événement planifié
+EbpSysAutoTreeCategory : Catégorie d'arbre automatique du système EBP
+EcotaxFurniture : Écotaxe sur le mobilier
+SaleDocumentLineHumanServiceDetail : Détail de service humain de ligne de document de vente
+MailMergeTemplate : Modèle de publipostage
+EventLog : Journal des événements
+AccountingYear : Exercice comptable
+CommissionScaleColleagueLine : Ligne de collègue d'échelle de commission
+SaleInvoiceWebSynchronizationInfo : Infos de synchronisation web de facture de vente
+EbpSysSchemaInformation : Informations de schéma du système EBP
+EbpSysQueryTool : Outil de requête du système EBP
+PosTerminalOpenCloseSaleInAccountPaymentTypeDetail : Détail de type de paiement en compte à l'ouverture/fermeture de terminal de point de vente
+TaxItem : Article fiscal
+PriceList : Liste de prix
+EbpSysDefaultReport : Rapport par défaut du système EBP
+EbpSysCloudAccount : Compte cloud du système EBP
+DealItem : Article d'affaire
+CustomerWebSynchronizationInfo : Infos de synchronisation web du client
+EbpSysWinLayoutDefaultTemplate : Modèle par défaut de mise en page de fenêtre du système EBP
+CommissionScaleSelectionLine : Ligne de sélection d'échelle de commission
+EbpSysSaveLog : Journal de sauvegarde du système EBP
+IncidentCustomerProduct : Produit client incident
+TaxTerritoriality : Territorialité fiscale
+EbpSysWinListView : Vue en liste de fenêtre du système EBP
+SubTaxTerritoriality : Sous-territorialité fiscale
+PurchaseCommitment : Engagement d'achat
+DocumentLineAssociation : Association de ligne de document
+OlapTemplateTable : Table de modèle OLAP
+AnalyticGridLine : Ligne de grille analytique
+AccountingExchangeGroupProcessDetail : Détail de processus de groupe d'échange comptable
+ColleagueWebSynchronizationInfo : Infos de synchronisation web du collègue
+PosTerminalOpenClosePaymentTypeDetail : Détail de type de paiement à l'ouverture/fermeture de terminal de point de vente
+SupplierSubFamily : Sous-famille de fournisseur
+EbpSysWinGridTemplate : Modèle de grille de fenêtre du système EBP
+ScheduleEventExpectedResource : Ressource attendue pour événement planifié
+SupplierFamily : Famille de fournisseur
+DealAssociatedFiles : Fichiers associés à l'affaire
+ComplementaryAccount : Compte complémentaire
+ColleagueAssociatedFiles : Fichiers associés au collègue
+PriceListCategory : Catégorie de liste de prix
+EbpSysNavBarDefaultTemplate : Modèle par défaut de barre de navigation du système EBP
+ConstructionSiteReferenceDocumentLine : Ligne de document de référence de chantier
+Colleague : Collègue
+PurchaseDisbursementStudySchemaTable : Table de schéma d'étude de déboursement d'achat
+Receipt : Reçu
+SubTax : Sous-taxe
+CustomerAssociatedFiles : Fichiers associés au client
+Bank : Banque
+OlapFavoriteTemplate : Modèle favori OLAP
+Round : Ronde
+SaleOrderEcommerceInfo : Infos ecommerce de commande de vente
+RangeTypeElement : Élément de type de gamme
+MaintenanceContractStockDocument : Document de stock de contrat de maintenance
+SupplierOptionsCustomReport : Rapport personnalisé d'options de fournisseur
+CommissionScale : Échelle de commission
+DealStockDocumentLine : Ligne de document de stock d'affaire
+ContactAssociatedFiles : Fichiers associés au contact
+CustomerFamily : Famille de client
+EbpSysWinLayout : Mise en page de fenêtre du système EBP
+Address : Adresse
+UnpaidSettlementReason : Raison de règlement impayé
+SaleDocumentEx : Document de vente (extension)
+ShippingAccount : Compte d'expédition
+EbpSysUserGroup : Groupe d'utilisateurs du système EBP
+DealExtraCost : Coût supplémentaire d'affaire
+GiftVoucher : Bon cadeau
+StockMovement : Mouvement de stock
+TravelExpense : Frais de déplacement
+SaleDocumentLine : Ligne de document de vente
+DealSaleDocumentLine : Ligne de document de vente d'affaire
+ScheduleEventCustomerProduct : Produit client d'événement planifié
+ClassificationGroup : Groupe de classification
+EbpSysRightColumn : Colonne de droit du système EBP
+CustomerOptionsCustomReport : Rapport personnalisé d'options de client
+PosTerminal : Terminal de point de vente
+StockDocumentAssociatedFiles : Fichiers associés au document de stock
+SupplierFamilyCustomReport : Rapport personnalisé de famille de fournisseur
+EbpSysWinListTemplate : Modèle de liste de fenêtre du système EBP
+Expense : Dépense
+PurchaseStudyDetailLineSchemaTable : Table de schéma de ligne de détail d'étude d'achat
+SaleQuoteWebSynchronizationInfo : Infos de synchronisation web de devis de vente
+EbpSysDataHash : Hachage de données du système EBP
+CustomerProductAssociatedFiles : Fichiers associés au produit client
+SupplierAssociatedFiles : Fichiers associés au fournisseur
+ConstructionSite : Chantier
+SaleDocument : Document de vente
+ConstructionSiteReferenceDocument : Document de référence de chantier
+CustomerProduct : Produit client
+Vat : TVA
+EbpSysExchangeApplication : Application d'échange du système EBP
+ScheduleEventType : Type d'événement planifié
+PosTerminalOpenCloseVatDetail : Détail de TVA à l'ouverture/fermeture de terminal de point de vente
+ShippingLevel : Niveau d'expédition
+Incident : Incident
+Shipping : Expédition
+Storehouse : Entrepôt
+CommissionScaleStageLine : Ligne de stade d'échelle de commission
+DealPurchaseDocument : Document d'achat d'affaire
+Deal : Affaire
+PriceListInclusionLine : Ligne d'inclusion de liste de prix
+AnalyticPlan : Plan analytique
+RangeTemplate : Modèle de gamme
+EbpSysReportSavedSettings : Paramètres sauvegardés de rapport du système EBP
+EbpSysUserMandatoryField : Champ obligatoire d'utilisateur du système EBP
+SaleSettlementCommitmentAssociation : Association d'engagement de règlement de vente
+EbpSysNavBar : Barre de navigation du système EBP
+Activity : Activité
+LoyaltyInclusionLine : Ligne d'inclusion de fidélité
+AccountingExchangeGroup : Groupe d'échange comptable
+CustomerSubscription : Abonnement client
+EbpSysLinkedExtension : Extension liée du système EBP
+DealSupplier : Fournisseur d'affaire
+ModificationLog : Journal de modification
+CashMovement : Mouvement de caisse
+LoyaltyCardType : Type de carte de fidélité
+DealResourcesCost : Coût des ressources d'affaire
+DiscountCouponBarCode : Code-barres de coupon de réduction
+StockRangeItem : Article de gamme de stock
+Tax : Taxe
+EbpSysDashboardDefaultTemplate : Modèle par défaut de tableau de bord du système EBP
+ScheduleEventTemplate : Modèle d'événement planifié
+OptionsCopiedInDocumentSchemaTable : Options copiées dans la table de schéma de document
+EbpSysUser : Utilisateur du système EBP
+GuaranteeType : Type de garantie
+CorrectionReason : Raison de correction
+Supplier : Fournisseur
+PeriodicInvoicing : Facturation périodique
+ScheduleEventAssociatedFiles : Fichiers associés à l'événement planifié
+SaleDocumentLineTrackingDispatch : Expédition de suivi de ligne de document de vente
+IntrastatIncoterm : Incoterm Intrastat
+PaymentType : Type de paiement
+EbpSysSynchronizedVersion : Version synchronisée du système EBP
+EcotaxCalculationBase : Base de calcul d'écotaxe
+StockDocumentLine : Ligne de document de stock
+PurchaseDocumentAssociatedFiles : Fichiers associés au document d'achat
+EbpSysAutoIncrement : Auto-incrémentation du système EBP
+ScheduleEventTemplateResource : Ressource de modèle d'événement planifié
+ScheduleEvent : Événement planifié
+EbpSysDeletedRecord : Enregistrement supprimé du système EBP
+RangeItem : Article de gamme
+ReminderLetter : Lettre de rappel
+Country : Pays
+StockDocumentLineTrackingDispatch : Expédition de suivi de ligne de document de stock
+UnpaidSaleSettlementLine : Ligne de règlement de vente impayée
+RecoveredDocumentAssociatedFiles : Fichiers associés au document récupéré
+RangeTemplateElement : Élément de modèle de gamme
+WinRangePivotGridDefaultTemplate : Modèle par défaut de grille pivot de gamme de fenêtre
+RangeItemAssociatedFiles : Fichiers associés à l'article de gamme
+EbpSysCloudAccountPublicationAssociation : Association de publication de compte cloud du système EBP
+SupplierPurchaseConditionsSchemaTable : Table de schéma de conditions d'achat de fournisseur
+PurchaseSettlementCommitmentAssociation : Association d'engagement de règlement d'achat
+IncidentTemplateExtraCost : Coût supplémentaire de modèle d'incident
+PriceListCalculationLine : Ligne de calcul de liste de prix
+Equipment : Équipement
+EbpSysSchemaSynchronizationLog : Journal de synchronisation de schéma du système EBP
+SettlementModeLine : Ligne de mode de règlement
+SupplierItem : Article de fournisseur

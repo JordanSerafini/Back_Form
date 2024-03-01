@@ -32,13 +32,20 @@ const tableController = {
       res.status(500).send("Erreur lors de la récupération des données.");
     }
   },
+
+
+
+
+
+
+
   
   async test(req: any, res: any) {
     try {
 
       await client.connectDatabase();
 
-      const query= "SELECT * FROM ScheduleEvent  ";
+      const query= "SELECT * FROM TrackingStockItem";
       const tables = await client.executeQuery(query);
 
       res.send(tables);

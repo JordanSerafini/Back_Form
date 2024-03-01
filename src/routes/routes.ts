@@ -64,7 +64,7 @@ router.get('/validateToken', formController.validateToken);
 
 
 // EBP API LOCAL
-router.get('/tables', tableController.getAllTables)
+router.get('/getAllTables', tableController.getAllTables)
 router.get('/getAllCustomer', customerEBPController.getAllCustomer);
 router.get('/item', itemEBPController.getAllItem);
 router.get('/schedule-event', tableController.getScheduleEvent)
@@ -80,7 +80,9 @@ router.get('/swapEvent', swapController.fetchAndInsertEvent)
 
 
 
+// -------------------------------- EBP local Full-------------------------------- //
 
-router.get('/test', tableController.test)
+
+
 
 export default router
