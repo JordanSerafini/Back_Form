@@ -5,10 +5,13 @@ const config = {
   password: "@ebp78EBP",
   server: "localhost\\EBP",
   database: "Solution Logique_0895452f-b7c1-4c00-a316-c6a6d0ea4bf4",
-  options: {
+    options: {
     trustServerCertificate: true,
   },
 };
+
+//   database: "Solution Logique_0895452f-b7c1-4c00-a316-c6a6d0ea4bf4",
+//   database: "Test Barrachin_0895452f-b7c1-4c00-a316-c6a6d0ea4bf4",
 
 // Créer un pool de connexions
 const pool = new ConnectionPool(config);

@@ -815,6 +815,70 @@ async getTrackingStockItem(req: any, res: any) {
   }
 },
 
+async getDealCustomer(req: any, res: any) {
+  try {
+
+    await client.connectDatabase();
+
+    const query= "SELECT * FROM DealCustomer";
+    const tables = await client.executeQuery(query);
+
+    res.send(tables);
+
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Erreur lors de la récupération des données.");
+  }
+},
+
+async getMaintenanceContract(req: any, res: any) {
+  try {
+
+    await client.connectDatabase();
+
+    const query= "SELECT * FROM MaintenanceContract";
+    const tables = await client.executeQuery(query);
+
+    res.send(tables);
+
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Erreur lors de la récupération des données.");
+  }
+},
+
+async getItemComponent(req: any, res: any) {
+  try {
+
+    await client.connectDatabase();
+
+    const query= "SELECT * FROM ItemComponent";
+    const tables = await client.executeQuery(query);
+
+    res.send(tables);
+
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Erreur lors de la récupération des données.");
+  }
+},
+
+async getCustomerCustomReport(req: any, res: any) {
+  try {
+
+    await client.connectDatabase();
+
+    const query= "SELECT * FROM CustomerCustomReport";
+    const tables = await client.executeQuery(query);
+
+    res.send(tables);
+
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Erreur lors de la récupération des données.");
+  }
+},
+
 };
 
 export default itemController;

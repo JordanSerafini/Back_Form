@@ -45,7 +45,7 @@ const tableController = {
 
       await client.connectDatabase();
 
-      const query= "SELECT * FROM TrackingStockItem";
+      const query= "SELECT * FROM Customer";
       const tables = await client.executeQuery(query);
 
       res.send(tables);
