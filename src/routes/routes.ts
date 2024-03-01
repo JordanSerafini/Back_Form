@@ -14,6 +14,8 @@ import eventController from "../controllers/eventController";
 import CreateTableController from "../controllers/EBP_API/createTableController";
 import indexController from "../DB_SWAP/indexController";
 
+import swapEbpController from "../DB_SWAP/swapControllerEbp";
+
 import isToken from "../middleware/isToken";
 import isAuthMw from "../middleware/isAuth";
 
@@ -82,7 +84,7 @@ router.get('/swapEvent', swapController.fetchAndInsertEvent)
 
 // -------------------------------- EBP local Full-------------------------------- //
 
-router.get('/listTables', indexController.listTables);
-router.get('/listTablesAndSchemas', indexController.listTablesAndSchemas);
+router.get('/listTablesAndSchemas', indexController.listTablesAndSchemas)
+router.get('/ultimate', swapEbpController.migrateDatabase)
 
 export default router

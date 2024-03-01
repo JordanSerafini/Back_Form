@@ -1,8 +1,10 @@
+import { pool } from '../database/pool';
 
-function generatePostgresSchema(tableName, columns) {
+
+export function generatePostgresSchema(tableName: any, columns: any[]) {
   let createTableQuery = `CREATE TABLE ${tableName} (\n`;
 
-  columns.forEach((column, index) => {
+  columns.forEach((column: { DATA_TYPE: any; CHARACTER_MAXIMUM_LENGTH: any; COLUMN_NAME: any; IS_NULLABLE: string; COLUMN_DEFAULT: any; }, index: number) => {
     let pgDataType = column.DATA_TYPE;
     switch(column.DATA_TYPE) {
       case 'nvarchar':
@@ -46,10 +48,10 @@ function generatePostgresSchema(tableName, columns) {
 
 
 
-async function executeScriptsOnPostgres(scripts) {
+export async function executeScriptsOnPostgres(scripts: any) {
   for (let script of scripts) {
     try {
-      await pgPool.query(script);
+      await pool.query(script);
       console.log("Script exécuté avec succès:");
       console.log(script);
     } catch (error) {
