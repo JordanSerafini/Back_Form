@@ -1,55 +1,82 @@
-import { pool } from '../database/pool';
+import { pool } from "../database/pool";
 
+interface Column {
+  DATA_TYPE: string;
+  CHARACTER_MAXIMUM_LENGTH?: number;
+  COLUMN_NAME: string;
+  IS_NULLABLE: string;
+  COLUMN_DEFAULT?: any;
+}
 
-export function generatePostgresSchema(tableName: any, columns: any[]) {
-  let createTableQuery = `CREATE TABLE ${tableName} (\n`;
+export function generatePostgresSchema(
+  tableName: string,
+  columns: Column[]
+): string {
+  const createTableQuery =
+    `CREATE TABLE ${tableName} (\n` +
+    columns
+      .map((column, index) => {
+        let pgDataType: string;
 
-  columns.forEach((column: { DATA_TYPE: any; CHARACTER_MAXIMUM_LENGTH: any; COLUMN_NAME: any; IS_NULLABLE: string; COLUMN_DEFAULT: any; }, index: number) => {
-    let pgDataType = column.DATA_TYPE;
-    switch(column.DATA_TYPE) {
-      case 'nvarchar':
-        pgDataType = `VARCHAR(${column.CHARACTER_MAXIMUM_LENGTH})`;
-        break;
-      case 'int':
-        pgDataType = 'INTEGER';
-        break;
-      case 'varbinary':
-        pgDataType = 'VARBINARY';
-        break;
-      case 'uniqueidentifier':
-        pgDataType = 'UNIQUEIDENTIFIER';
-        break;
-      case 'decimal':
-        pgDataType = 'DECIMAL';
-        break;
-      case 'tinyint':
-        pgDataType = 'TINYINT';
-        break;
-      case 'datetime':
-        pgDataType = 'DATETIME';
-        break;
-      case 'bit':
-        pgDataType = 'BIT';
-        break;
-      default:
-        throw new Error(`Type de données non géré : ${column.DATA_TYPE}`);
-    }
+        switch (column.DATA_TYPE) {
+          case "nvarchar":
+          case "varchar":
+            pgDataType = `TEXT`;
+            break;
+          case "int":
+            pgDataType = "INTEGER";
+            break;
+          case "varbinary":
+            pgDataType = "BYTEA";
+            break;
+          case "uniqueidentifier":
+            pgDataType = "UUID";
+            break;
+          case "decimal":
+            pgDataType = "DECIMAL";
+            break;
+          case "tinyint":
+            pgDataType = "SMALLINT";
+            break;
+          case "smallint":
+            pgDataType = "SMALLINT";
+            break;
+          case "datetime":
+            pgDataType = "TIMESTAMP";
+            break;
+          case "bit":
+            pgDataType = "BIT(1)";
+            break;
+          case "float":
+            pgDataType = "REAL";
+            break;
+          case "nchar":
+            pgDataType = "TEXT";
+            break;
+          default:
+            pgDataType = "TEXT";
+            throw new Error(`Type de données non géré : ${column.DATA_TYPE}`);
+        }
 
-    createTableQuery += `  ${column.COLUMN_NAME} ${pgDataType}`;
-    if (column.IS_NULLABLE === 'NO') createTableQuery += ' NOT NULL';
-    if (column.COLUMN_DEFAULT) createTableQuery += ` DEFAULT ${column.COLUMN_DEFAULT}`;
-    if (index < columns.length - 1) createTableQuery += ',\n'; // Pas de virgule après la dernière colonne
-  });
-
-  createTableQuery += '\n);';
+        let columnDefinition = `  ${column.COLUMN_NAME} ${pgDataType}`;
+        if (column.IS_NULLABLE === "NO") columnDefinition += " NOT NULL";
+        if (column.COLUMN_DEFAULT)
+          columnDefinition += ` DEFAULT ${column.COLUMN_DEFAULT}`;
+        return columnDefinition + (index < columns.length - 1 ? "," : ""); // Ajouter une virgule sauf pour la dernière colonne
+      })
+      .join("\n") +
+    "\n);";
 
   return createTableQuery;
-};
+}
 
 
 
-export async function executeScriptsOnPostgres(scripts: any) {
-  for (let script of scripts) {
+
+export async function executeScriptsOnPostgres(
+  scripts: string[]
+): Promise<void> {
+  for (const script of scripts) {
     try {
       await pool.query(script);
       console.log("Script exécuté avec succès:");
@@ -57,7 +84,6 @@ export async function executeScriptsOnPostgres(scripts: any) {
     } catch (error) {
       console.error("Erreur lors de l'exécution du script:", error);
       console.error("Script en échec:", script);
-      // Selon votre préférence, vous pouvez arrêter le processus ou continuer avec les autres scripts
     }
   }
 }

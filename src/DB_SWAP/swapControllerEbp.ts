@@ -18,13 +18,17 @@ const swapEbpController = {
       const tablesAndSchemas: TableAndColumns[] = await indexController.listTablesAndSchemas();
 
       for (const { tableName, columns } of tablesAndSchemas) {
+        // Générer le script de création de table PostgreSQL
         const createTableScript = generatePostgresSchema(tableName, columns);
+
+        // Exécuter le script de création de table PostgreSQL
         await executeScriptsOnPostgres([createTableScript]);
       }
 
       console.log('Migration terminée avec succès.');
     } catch (error) {
       console.error('Erreur lors de la migration:', error);
+      throw error; // Propager l'erreur pour une gestion ultérieure si nécessaire
     } finally {
       await pool.end();
     }

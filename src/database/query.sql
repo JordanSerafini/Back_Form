@@ -37,6 +37,9 @@ FROM
 WHERE
     table_name = 'event';
 
+SELECT table_name
+FROM information_schema.tables
+WHERE table_schema = 'public';
 
 
 

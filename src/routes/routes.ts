@@ -72,7 +72,7 @@ router.get('/item', itemEBPController.getAllItem);
 router.get('/schedule-event', tableController.getScheduleEvent)
 
 router.get('/createTable', CreateTableController.createTableWithColumns)
-router.get('/test', tableController.test)
+router.get('/test', indexController.listTablesAndSchemas)
 
 
 // Route transfert de données MSSQL vers PGSQL
@@ -85,6 +85,6 @@ router.get('/swapEvent', swapController.fetchAndInsertEvent)
 // -------------------------------- EBP local Full-------------------------------- //
 
 router.get('/listTablesAndSchemas', indexController.listTablesAndSchemas)
-router.get('/ultimate', swapEbpController.migrateDatabase)
+router.get('/TotalSwapMSQLtoPG', swapEbpController.migrateDatabase)
 
 export default router
