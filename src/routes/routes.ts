@@ -82,9 +82,11 @@ router.get('/swapEvent', swapController.fetchAndInsertEvent)
 
 
 
+
 // -------------------------------- EBP local Full-------------------------------- //
 
 router.get('/listTablesAndSchemas', indexController.listTablesAndSchemas)
 router.get('/TotalSwapMSQLtoPG', swapEbpController.migrateDatabase)
+router.get('/getAndInsertItem', swapEbpController.getAndInsertItem)
 
 export default router
