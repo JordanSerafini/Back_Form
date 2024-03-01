@@ -38,58 +38,55 @@ const swapEbpController = {
 
   async getAndInsertItem() {
     try {
-      await client.connectDatabase(); // Connexion à la première base de données
+      await client.connectDatabase(); 
+      const query = "SELECT * FROM Item"; 
+      const result = await client.executeQuery(query); 
   
-      const query = "SELECT * FROM Item";
-      const result = await client.executeQuery(query);
-      // Nous traitons 'result' comme contenant directement les données à insérer
-  
-      const poolClient = await pool.connect(); // Connexion à la seconde base de données
+      const poolClient = await pool.connect(); 
   
       try {
         await poolClient.query('BEGIN');
   
         for (const item of result) {
           const columns = Object.keys(item).join(', ');
-          // Convertissez chaque valeur booléenne en true ou false
-          const values = Object.values(item).map(value => 
-            typeof value === 'boolean' ? value : value // Ajoutez ici la logique de conversion si nécessaire
-          );
+          const values = Object.values(item).map(value => {
+            if (typeof value === 'boolean') {
+              return value ? '1' : '0'; // Convertit true en '1' et false en '0' pour les champs BIT
+            }
+            return value;
+          });
+          
           const placeholders = values.map((_, index) => `$${index + 1}`).join(', ');
+  
+          // Affiche les valeurs pour le débogage
           console.log('columns:', columns);
           console.log('values:', values);
           console.log('placeholders:', placeholders);
-        
+  
           const insertQuery = `INSERT INTO "Item" (${columns}) VALUES (${placeholders})`;
-        
+  
           try {
-            // Exécution de la requête d'insertion avec les valeurs de chaque item
             await poolClient.query(insertQuery, values);
           } catch (error) {
             console.error('Erreur d\'insertion pour l\'item:', item, 'Erreur:', error);
-            // Vous pouvez choisir de lancer une exception ici ou de continuer avec les autres items
+            break;
           }
         }
-        
   
         await poolClient.query('COMMIT');
         console.log('Tous les items ont été insérés avec succès dans la base de données cible.');
       } catch (error) {
         await poolClient.query('ROLLBACK');
         console.error('Erreur lors de l\'insertion des items:', error);
-        throw error;
       } finally {
-        poolClient.release(); // Libération du client de pool
+        poolClient.release();
       }
     } catch (error) {
       console.error('Erreur lors de la récupération ou de l\'insertion des items:', error);
-      throw error;
     }
   }
   
-
   
- 
 
 };
 
