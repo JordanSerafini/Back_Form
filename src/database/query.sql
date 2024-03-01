@@ -43,6 +43,14 @@ WHERE table_schema = 'public';
 
 
 
+
+-- ATTENTION DROP TOUTES LES TABLES PUBLIC
+SELECT 'DROP TABLE IF EXISTS ' || string_agg(quote_ident(table_name), ', ') || ' CASCADE;' 
+FROM information_schema.tables 
+WHERE table_schema = 'public';
+
+
+
 -- Événements pour les 15 prochains jours
 INSERT INTO event (Caption, StartDateTime, EndDateTime, ExpectedDuration_DurationInHours, AchievedDuration_DurationInHours, ColleagueId, NotesClear, xx_Type_Tache)
 VALUES 

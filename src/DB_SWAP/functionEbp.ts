@@ -13,13 +13,15 @@ export function generatePostgresSchema(
   columns: Column[]
 ): string {
   const createTableQuery =
-    `CREATE TABLE ${tableName} (\n` +
+    `CREATE TABLE "${tableName}" (\n` +
     columns
       .map((column, index) => {
         let pgDataType: string;
 
         switch (column.DATA_TYPE) {
           case "nvarchar":
+            pgDataType = `TEXT`;
+            break;
           case "varchar":
             pgDataType = `TEXT`;
             break;
