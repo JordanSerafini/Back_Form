@@ -108,6 +108,7 @@ router.get('/DeleteAllTables', fullSwapController.DeleteAllTables)
 
 // Route pour récupérer les Clients
 router.get('/customerNew', fullSwapController.getAllCustomer)
+router.get('/itemNew', fullSwapController.getAllItem)
 
 
 
