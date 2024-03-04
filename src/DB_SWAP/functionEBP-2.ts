@@ -1,4 +1,4 @@
-import { pgClient } from "../database/clientPGlocal";
+import { pgClient } from "../database/clientPGlocal"; // client PG de destination
 
 
 interface Column {

@@ -1,6 +1,6 @@
 // Importez uniquement ce dont vous avez besoin
-import { executeQuery } from "../database/clientPGlocal";
-import client from "../database/client";
+import { executeQuery } from "../database/clientPGlocal"; // Client base de donnée PostgreSQL de destination
+import client from "../database/client"; // Client base de donnée Microsoft SQL Server de base
 import indexController from "./indexController";
 import {
   executeScriptsOnPostgres,
@@ -136,7 +136,7 @@ const fullSwapController = {
                 }
             }
 
-            console.log(`Table ${tableName} migrated successfully.`);
+            console.log(`Table ${tableName} migrated successfully. ${tableData.length} records inserted.`);
         }
     } catch (error) {
         console.error("Migration failed:", error);

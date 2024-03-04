@@ -1,4 +1,4 @@
-import { Client, QueryArrayConfig } from 'pg';
+import { Client } from 'pg';
 
 const pgClient = new Client({
   user: 'jordans',
