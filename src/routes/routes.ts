@@ -100,9 +100,12 @@ router.get('/getAndInsertCustomerProduct', swapEbpController.getAndInsertCustome
 router.get('/getAndInsertScheduleEvent', swapEbpController.getAndInsertScheduleEvent)
 router.get('/getAndInsertItemFamily', swapEbpController.getAndInsertItemFamily)
 
+// ---------------------------------------------------------------- //
 router.get('/createAllTables', fullSwapController.createAllTables)
 router.get('/insertAll', fullSwapController.insertAll)
 router.get('/truncateAllTables', fullSwapController.truncateAllTables)
 router.get('/DeleteAllTables', fullSwapController.DeleteAllTables)
+
+
 
 export default router
