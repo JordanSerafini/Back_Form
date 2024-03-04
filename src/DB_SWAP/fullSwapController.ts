@@ -101,7 +101,6 @@ const fullSwapController = {
   },  
   
 
-
   async insertAll() {
     try {
       await client.connectDatabase();
@@ -115,9 +114,12 @@ const fullSwapController = {
         for (const record of tableData) {
           const columns = Object.keys(record).join(", ");
           const values = Object.values(record).map(value => {
-            // Convertit explicitement 't' et 'f' en valeurs booléennes true et false
+            // Vérifier si la valeur est une chaîne de caractères et si elle est 't' ou 'f', puis la convertir en booléen
             if (typeof value === 'string' && (value.toLowerCase() === 't' || value.toLowerCase() === 'true')) return true;
             if (typeof value === 'string' && (value.toLowerCase() === 'f' || value.toLowerCase() === 'false')) return false;
+            // Vérifier si la valeur est une chaîne de caractères représentant un nombre binaire valide
+            if (typeof value === 'string' && /^[01]+$/.test(value)) return value;
+            // Dans les autres cas, retourner la valeur telle quelle
             return value;
           });
           const placeholders = values.map((_, index) => `$${index + 1}`).join(", ");
