@@ -98,5 +98,6 @@ router.get('/getAndInsertStockMovement', swapEbpController.getAndInsertStockMove
 router.get('/getAndInsertCustomerProduct', swapEbpController.getAndInsertCustomerProduct)
 router.get('/getAndInsertScheduleEvent', swapEbpController.getAndInsertScheduleEvent)
 router.get('/getAndInsertItemFamily', swapEbpController.getAndInsertItemFamily)
+router.get('/insertAll', swapEbpController.insertAll)
 
 export default router

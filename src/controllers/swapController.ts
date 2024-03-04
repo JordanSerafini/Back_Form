@@ -2,10 +2,6 @@ import { Request, Response } from "express";
 import client from "../database/client";
 import { pool } from "../database/pool";
 
-interface Customer {
-  name: string;
-  maininvoicingcontact_phone: string;
-}
 
 const swapController = {
   async fetchAndInsertItem(req: Request, res: Response) {
@@ -173,47 +169,6 @@ const swapController = {
       //await pool.release(clientPG);
     }
 }
-
-
-
-/*
-async fetchAndInsertEvent(req: Request, res: Response) {
-  const clientPG = await pool.connect();
-  try {
-      await client.connectDatabase();
-      const query = `SELECT * FROM ScheduleEvent`;
-      const result = await client.executeQuery(query); 
-      if (!Array.isArray(result)) {
-          throw new Error('Le résultat n\'est pas un tableau');
-      }
-
-      // Obtenez la liste des colonnes de votre modèle de table "event"
-      const eventColumns = ['caption', 'startdatetime', 'enddatetime', 'expectedduration_durationinhours', 'achievedduration_durationinhours', 'scheduleeventnumber', 'invoicecustomerid', 'dealid', 'colleagueid', 'notesclear', 'xx_type_tache', 'xx_theme', 'expectedduration_duration', 'expectedduration_unitid'];
-
-      // Boucle sur les résultats pour les insérer dans la base de données PostgreSQL
-      for (const item of result) {
-          // Filtrez les colonnes pour ne prendre en compte que celles qui existent dans votre modèle de table "event"
-          const validColumns = Object.keys(item).filter(column => eventColumns.includes(column.toLowerCase()));
-          const columns = validColumns.join(', ');
-          const placeholders = validColumns.map((_, index) => `$${index + 1}`).join(', ');
-          const values = validColumns.map(column => item[column]);
-
-          const insertQuery = `
-              INSERT INTO event (${columns})
-              VALUES (${placeholders})
-          `;
-          await clientPG.query(insertQuery, values);
-      }
-
-      res.status(201).json({ message: "Data fetched from external source and inserted into PostgreSQL successfully" });
-  } catch (err) {
-      console.error("Error during data fetch/insert:", err);
-      res.status(500).json({ error: "Failed to fetch data from external source or insert into PostgreSQL" });
-  } finally {
-      clientPG.release();
-  }
-}
-*/
 
 
 
