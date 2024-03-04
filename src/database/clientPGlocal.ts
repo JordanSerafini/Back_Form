@@ -4,7 +4,7 @@ const pgClient = new Client({
   user: 'jordans',
   host: 'localhost',
   database: 'ebptest',
-  password: ' ',
+  password: ' ', 
   port: 5432,
 });
 
@@ -12,6 +12,7 @@ pgClient.connect()
   .then(() => console.log('Connected to PostgreSQL'))
   .catch((e: Error) => console.error('Connection to PostgreSQL failed', e));
 
+// Exécute une requête SQL avec des paramètres optionnels
 const executeQuery = async (queryText: string, params: any[] = []) => {
   try {
     const res = await pgClient.query(queryText, params);
@@ -22,4 +23,34 @@ const executeQuery = async (queryText: string, params: any[] = []) => {
   }
 };
 
-export { pgClient, executeQuery };
+// Démarre une transaction
+const startTransaction = async () => {
+  try {
+    await pgClient.query('BEGIN');
+  } catch (error) {
+    console.error('Error starting transaction', error);
+    throw error;
+  }
+};
+
+// Valide (commit) une transaction
+const commitTransaction = async () => {
+  try {
+    await pgClient.query('COMMIT');
+  } catch (error) {
+    console.error('Error committing transaction', error);
+    throw error;
+  }
+};
+
+// Annule (rollback) une transaction
+const rollbackTransaction = async () => {
+  try {
+    await pgClient.query('ROLLBACK');
+  } catch (error) {
+    console.error('Error rolling back transaction', error);
+    throw error;
+  }
+};
+
+export { pgClient, executeQuery, startTransaction, commitTransaction, rollbackTransaction };

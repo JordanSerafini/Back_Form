@@ -1,5 +1,5 @@
 // Importez uniquement ce dont vous avez besoin
-import { executeQuery } from "../database/clientPGlocal"; // Client base de donnée PostgreSQL de destination
+import { executeQuery } from "../database/clientPGlocal"; // Client base de donnée PostgreSQL de destinat
 import client from "../database/client"; // Client base de donnée Microsoft SQL Server de base
 import indexController from "./indexController";
 import {
@@ -115,7 +115,7 @@ const fullSwapController = {
                 const columns = Object.keys(record).join(", ");
                 const values = Object.values(record).map(value => {
                   if (typeof value === 'boolean') {
-                    return value ? 1 : 0; // Convertit true en 1 et false en 0
+                    return value ? 1 : 0; 
                   } else if (typeof value === 'string') {
                     const lowerCaseValue = value.toLowerCase();
                     if (lowerCaseValue === 't' || lowerCaseValue === 'true') return 1;
@@ -141,6 +141,7 @@ const fullSwapController = {
     } catch (error) {
         console.error("Migration failed:", error);
     }
+    console.log("Migration completed successfully.");
 }
 
 
