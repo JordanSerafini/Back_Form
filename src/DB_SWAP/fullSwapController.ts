@@ -128,7 +128,7 @@ const fullSwapController = {
               const placeholders = values.map((_, index) => `$${index + 1}`).join(", ");
               const insertQueryText = `INSERT INTO "${tableName}" (${columns}) VALUES (${placeholders}) ON CONFLICT DO NOTHING`;
               
-              console.log(insertQueryText, values);
+              //console.log(insertQueryText, values);
                 try {
                     await executeQuery(insertQueryText, values);
                 } catch (insertError) {
