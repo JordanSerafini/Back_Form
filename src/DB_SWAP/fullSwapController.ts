@@ -103,41 +103,46 @@ const fullSwapController = {
 
   async insertAll() {
     try {
-      await client.connectDatabase();
-      const tables = await client.executeQuery(`SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE'`);
+        await client.connectDatabase();
+        const tables = await client.executeQuery(`SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE'`);
 
-      for (const table of tables) {
-        const tableName = table.TABLE_NAME;
-        const selectQuery = `SELECT * FROM ${tableName}`;
-        const tableData = await client.executeQuery(selectQuery);
+        for (const table of tables) {
+            const tableName = table.TABLE_NAME;
+            const selectQuery = `SELECT * FROM ${tableName}`;
+            const tableData = await client.executeQuery(selectQuery);
 
-        for (const record of tableData) {
-          const columns = Object.keys(record).join(", ");
-          const values = Object.values(record).map(value => {
-            // Vérifier si la valeur est une chaîne de caractères et si elle est 't' ou 'f', puis la convertir en booléen
-            if (typeof value === 'string' && (value.toLowerCase() === 't' || value.toLowerCase() === 'true')) return true;
-            if (typeof value === 'string' && (value.toLowerCase() === 'f' || value.toLowerCase() === 'false')) return false;
-            // Vérifier si la valeur est une chaîne de caractères représentant un nombre binaire valide
-            if (typeof value === 'string' && /^[01]+$/.test(value)) return value;
-            // Dans les autres cas, retourner la valeur telle quelle
-            return value;
-          });
-          const placeholders = values.map((_, index) => `$${index + 1}`).join(", ");
-          const insertQueryText = `INSERT INTO "${tableName}" (${columns}) VALUES (${placeholders}) ON CONFLICT DO NOTHING`;
-          
-          try {
-            await executeQuery(insertQueryText, values);
-          } catch (insertError) {
-            console.error(`Error executing insert for table ${tableName}:`, insertError);
-          }
+            for (const record of tableData) {
+                const columns = Object.keys(record).join(", ");
+                const values = Object.values(record).map(value => {
+                  if (typeof value === 'boolean') {
+                    return value ? 1 : 0; // Convertit true en 1 et false en 0
+                  } else if (typeof value === 'string') {
+                    const lowerCaseValue = value.toLowerCase();
+                    if (lowerCaseValue === 't' || lowerCaseValue === 'true') return 1;
+                    if (lowerCaseValue === 'f' || lowerCaseValue === 'false') return 0;
+                  }
+                  return value;
+                });
+              
+              
+              const placeholders = values.map((_, index) => `$${index + 1}`).join(", ");
+              const insertQueryText = `INSERT INTO "${tableName}" (${columns}) VALUES (${placeholders}) ON CONFLICT DO NOTHING`;
+              
+              console.log(insertQueryText, values);
+                try {
+                    await executeQuery(insertQueryText, values);
+                } catch (insertError) {
+                    console.error(`Error executing insert for table ${tableName}:`, insertError);
+                }
+            }
+
+            console.log(`Table ${tableName} migrated successfully.`);
         }
-
-        console.log(`Table ${tableName} migrated successfully.`);
-      }
     } catch (error) {
-      console.error("Migration failed:", error);
+        console.error("Migration failed:", error);
     }
 }
+
 
 
 
