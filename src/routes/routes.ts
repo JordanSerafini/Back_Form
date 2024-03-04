@@ -106,6 +106,9 @@ router.get('/insertAll', fullSwapController.insertAll)
 router.get('/truncateAllTables', fullSwapController.truncateAllTables)
 router.get('/DeleteAllTables', fullSwapController.DeleteAllTables)
 
+// Route pour récupérer les Clients
+router.get('/customerNew', fullSwapController.getAllCustomer)
+
 
 
 export default router

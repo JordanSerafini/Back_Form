@@ -1,6 +1,7 @@
 // Importez uniquement ce dont vous avez besoin
 import { executeQuery } from "../database/clientPGlocal"; // Client base de donnée PostgreSQL de destinat
 import client from "../database/client"; // Client base de donnée Microsoft SQL Server de base
+import {pool} from "../database/pool"; // Client base de donnée PostgreSQL de base
 import indexController from "./indexController";
 import {
   executeScriptsOnPostgres,
@@ -142,8 +143,21 @@ const fullSwapController = {
         console.error("Migration failed:", error);
     }
     console.log("Migration completed successfully.");
-}
+},
 
+async getAllCustomer(req: any, res: any) {
+  try {
+
+    const query= `SELECT * FROM "Customer";`;
+    const tables = await pool.query(query);
+
+    res.send(tables);
+
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Erreur lors de la récupération des données.");
+  }
+},
 
 
 
