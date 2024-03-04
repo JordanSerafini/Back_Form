@@ -726,44 +726,7 @@ const swapEbpController = {
     }
   },
 
-  async insertAll() {
-    try {
-      await client.connectDatabase(); 
-      const tables = await client.executeQuery(
-        `SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE'`
-      );
-
-      for (const table of tables) {
-        const tableName = table.TABLE_NAME;
-        const selectQuery = `SELECT * FROM ${tableName}`;
-        const tableData = await client.executeQuery(selectQuery);
-
-        const poolClient = await pool.connect(); // Connectez-vous à PostgreSQL
-        await poolClient.query("BEGIN");
-
-        try {
-          for (const record of tableData) {
-            const columns = Object.keys(record).join(", ");
-            const values = Object.values(record).map((value) => `'${value}'`);
-            const placeholders = values
-              .map((_, index) => `$${index + 1}`)
-              .join(", ");
-            const insertQuery = `INSERT INTO ${tableName} (${columns}) VALUES (${placeholders}) ON CONFLICT DO NOTHING`; 
-          }
-
-          await poolClient.query("COMMIT");
-          console.log(`Table ${tableName} migrated successfully.`);
-        } catch (error) {
-          console.error(`Error migrating table ${tableName}:`, error);
-          await poolClient.query("ROLLBACK");
-        } finally {
-          poolClient.release(); // Libérez la connexion
-        }
-      }
-    } catch (error) {
-      console.error("Migration failed:", error);
-    }
-  },
+  
 };
 
 export default swapEbpController;

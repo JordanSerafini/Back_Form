@@ -1,4 +1,4 @@
-import { pool } from "../database/pool";
+import { pgClient } from "../database/clientPGlocal";
 
 
 interface Column {
@@ -73,12 +73,10 @@ export function generatePostgresSchema(
   return createTableQuery;
 }
 
-export async function executeScriptsOnPostgres(
-  scripts: string[]
-): Promise<void> {
+export async function executeScriptsOnPostgres(scripts: string[]): Promise<void> {
   for (const script of scripts) {
     try {
-      await pool.query(script);
+      await pgClient.query(script);
       console.log("Script exécuté avec succès:");
       console.log(script);
     } catch (error) {

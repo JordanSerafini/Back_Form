@@ -13,6 +13,7 @@ import cusctomerController from "../controllers/customerController";
 import eventController from "../controllers/eventController";
 import CreateTableController from "../controllers/EBP_API/createTableController";
 import indexController from "../DB_SWAP/indexController";
+import fullSwapController from "../DB_SWAP/fullSwapController";
 
 import swapEbpController from "../DB_SWAP/swapControllerEbp";
 
@@ -98,6 +99,10 @@ router.get('/getAndInsertStockMovement', swapEbpController.getAndInsertStockMove
 router.get('/getAndInsertCustomerProduct', swapEbpController.getAndInsertCustomerProduct)
 router.get('/getAndInsertScheduleEvent', swapEbpController.getAndInsertScheduleEvent)
 router.get('/getAndInsertItemFamily', swapEbpController.getAndInsertItemFamily)
-router.get('/insertAll', swapEbpController.insertAll)
+
+router.get('/createAllTables', fullSwapController.createAllTables)
+router.get('/insertAll', fullSwapController.insertAll)
+router.get('/truncateAllTables', fullSwapController.truncateAllTables)
+router.get('/DeleteAllTables', fullSwapController.DeleteAllTables)
 
 export default router
