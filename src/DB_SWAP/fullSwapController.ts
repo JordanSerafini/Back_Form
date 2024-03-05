@@ -8,6 +8,8 @@ import {
   generatePostgresSchema,
 } from "./functionEBP-2";
 
+import {pgClient} from "../database/clientPGlocal"; 
+
 interface TableAndColumns {
   tableName: string;
   columns: {
@@ -149,7 +151,7 @@ async getAllCustomer(req: any, res: any) {
   try {
 
     const query= `SELECT * FROM "Customer";`;
-    const tables = await pool.query(query);
+    const tables = await pgClient.query(query);
 
     res.send(tables);
 
@@ -163,7 +165,7 @@ async getAllItem(req: any, res: any) {
   try {
 
     const query= `SELECT * FROM "Item";`;
-    const tables = await pool.query(query);
+    const tables = await pgClient.query(query);
 
 
     res.send(tables);
