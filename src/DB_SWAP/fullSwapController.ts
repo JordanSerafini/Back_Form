@@ -150,7 +150,7 @@ const fullSwapController = {
 async getAllCustomer(req: any, res: any) {
   try {
 
-    const query= `SELECT * FROM "Customer";`;
+    const query= `SELECT * FROM "Customer ORDER BY caption ASC;`;
     const tables = await pgClient.query(query);
 
     res.send(tables);
@@ -164,7 +164,7 @@ async getAllCustomer(req: any, res: any) {
 async getAllItem(req: any, res: any) {
   try {
 
-    const query= `SELECT * FROM "Item";`;
+    const query= `SELECT * FROM "Item ORDER BY caption ASC";`;
     const tables = await pgClient.query(query);
 
 
