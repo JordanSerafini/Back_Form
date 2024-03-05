@@ -20,12 +20,15 @@ const client = {
   // Fonction pour se connecter à la base de données
   async connectDatabase() {
     try {
-      await pool.connect();
+      if (!pool.connected) {
+        await pool.connect();
+      }
       console.log("Connexion à la base de données établie avec succès !");
     } catch (error) {
       console.error("Erreur lors de la connexion à la base de données :", error);
     }
   },
+  
 
   // Fonction pour exécuter une requête SQL
   async executeQuery(query: string) {

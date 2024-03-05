@@ -150,7 +150,7 @@ const fullSwapController = {
 async getAllCustomer(req: any, res: any) {
   try {
 
-    const query= `SELECT * FROM "Customer;`;
+    const query= `SELECT * FROM "Customer";`;
     const tables = await pgClient.query(query);
 
     res.send(tables);
@@ -179,6 +179,46 @@ async getAllItem(req: any, res: any) {
   }
 },
 
+async editItemStock(req: any, res: any) {
+  const {caption, newStock} = req.body;
+  try {
+    const query = `UPDATE "Item" SET realstock = ${newStock} WHERE caption = '${caption}'`;
+    const result = await pgClient.query(query);
+    res.send(result);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Erreur lors de la récupération des données.");
+  }
+},
+
+async deleteItem(req: any, res: any) {
+  await client.connectDatabase();
+
+  const {uniqueid} = req.body;
+  try {
+    const query = `DELETE FROM "Item" WHERE uniqueid = '${uniqueid}'`;
+    const result = await client.executeQuery(query);
+    res.send(result);
+  }
+  catch (err) {
+    console.log(err);
+    res.status(500).send("Erreur lors de la récupération des données.");
+  }
+},
+
+async getItemByCaption(req: any, res: any) {
+  await client.connectDatabase();
+
+  const {uniqueid} = req.body;
+  try {
+    const query = `SELECT * FROM "Item" WHERE uniqueid = '${uniqueid}'`;
+    const result = await client.executeQuery(query);
+    res.send(result);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Erreur lors de la récupération des données.");
+  }
+},
 
 
 

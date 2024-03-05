@@ -109,7 +109,8 @@ router.get('/DeleteAllTables', fullSwapController.DeleteAllTables)
 // Route pour récupérer les Clients
 router.get('/customerNew', fullSwapController.getAllCustomer)
 router.get('/itemNew', fullSwapController.getAllItem)
-
-
+router.post('/editItemStock', fullSwapController.editItemStock)
+router.delete('/deleteItem', fullSwapController.deleteItem)
+router.get('/getitembycaption', fullSwapController.getItemByCaption)
 
 export default router
