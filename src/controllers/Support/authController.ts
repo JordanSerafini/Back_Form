@@ -3,7 +3,6 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 
 import { pool } from '../../database/client/pool'; 
-const SECRET_KEY = process.env.SECRET_KEY ;
 
 class AuthController {
 
@@ -46,6 +45,7 @@ class AuthController {
 
   public static async verifyToken(req: Request, res: Response): Promise<void> {
 
+    const SECRET_KEY = process.env.SECRET_KEY ;
 
     // Extraction du token de l'URL
     const token = req.query.token as string;
