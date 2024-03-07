@@ -45,10 +45,7 @@ class AuthController {
 
 
   public static async verifyToken(req: Request, res: Response): Promise<void> {
-    // Désactiver la mise en cache pour cette réponse
-    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
-    res.setHeader('Pragma', 'no-cache');
-    res.setHeader('Expires', '0');
+
 
     // Extraction du token de l'URL
     const token = req.query.token as string;
@@ -56,6 +53,7 @@ class AuthController {
       res.status(401).json({ message: 'No token provided' });
       return;
     }
+    console.log(token);
 
     try {
       // Vérifier si le token est dans la liste noire
