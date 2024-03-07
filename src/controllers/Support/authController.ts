@@ -56,7 +56,7 @@ class AuthController {
       // Vérifier si le token est dans la liste noire
       const blacklistQuery = 'SELECT * FROM blacklisted_tokens WHERE token = $1';
       const blacklistResult = await pool.query(blacklistQuery, [token]);
-      //console.log(blacklistResult.rows);
+      console.log(blacklistResult.rows.length);
       if (blacklistResult.rows.length > 0) {
         res.status(401).json({ message: 'Token is blacklisted' });
         return;
