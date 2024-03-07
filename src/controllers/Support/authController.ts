@@ -41,7 +41,29 @@ class AuthController {
       res.status(500).json({ message: 'Erreur de configuration serveur' });
       return;
     }
+  };
+
+
+  public static async verifyToken(req: Request, res: Response): Promise<void> {
+    const token = req.headers.authorization?.split(' ')[1];
+
+    if (!token) {
+      res.status(401).json({ message: 'No token provided' });
+      return;
+    }
+
+    try {
+      const decoded = jwt.verify(token, AuthController.secretKey);
+
+      // Token valide
+      res.status(200).json({ message: 'Token is valid', decoded });
+    } catch (error) {
+      console.error('Erreur lors de la vérification du token :', error);
+      res.status(401).json({ message: 'Invalid token' });
+    }
   }
+
+
 }
 
 export default AuthController;

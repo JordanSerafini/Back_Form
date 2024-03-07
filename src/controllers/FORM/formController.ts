@@ -1,61 +1,108 @@
+import * as jwt from 'jsonwebtoken';
+import sgMail from "@sendgrid/mail";
 import { Request, Response } from 'express';
-import FormulaireModel from '../../models/FORM/formulaireModel'
+
+import FormulaireModel from '../../models/FORM/formulaireModel';
 import QuestionModel from '../../models/FORM/questionModel';
 import TextareaModel from '../../models/FORM/textareaModel';
 import RateModel from '../../models/FORM/rateModel';
 
+const SECRET_KEY = process.env.SECRET_KEY ;
 
-import {formPool} from "../../database/FORM/formPool" 
 
 const formController = {
     createFormulaire: async (req: Request, res: Response) => {
-        console.log(req.body)
+        console.log(req.body);
         try {
-          // Récupérer les données du formulaire depuis la requête
-          const { nom_formulaire, nom_client, commercial_id, data } = req.body;
-      
-          // Vérifier si les données sont correctement définies
-          if (!data || !Array.isArray(data) || data.length === 0) {
-            throw new Error('Aucune donnée valide fournie');
-          }
-      
-          // Diviser les données en questions, textareas et rates
-          console.log(data[0])
-          const { questions, textareas, rates } = data[0]; 
-      
-          // Créer un nouveau formulaire dans la base de données
-          const nouveauFormulaire = await FormulaireModel.insertFormulaire(nom_formulaire, nom_client, commercial_id);
-      
-          // Pour chaque question, créer un enregistrement dans la table Questions
-          if (questions && Array.isArray(questions)) {
-            await Promise.all(questions.map(async (question: any) => {
-              await QuestionModel.insertQuestion(question.title, question.response, nouveauFormulaire.id);
-            }));
-          }
-      
-          // Pour chaque textarea, créer un enregistrement dans la table Textarea
-          if (textareas && Array.isArray(textareas)) {
-            await Promise.all(textareas.map(async (textarea: any) => {
-              await TextareaModel.insertTextarea(textarea.title, textarea.response, nouveauFormulaire.id);
-            }));
-          }
-      
-          // Pour chaque rate, créer un enregistrement dans la table Rate
-          if (rates && Array.isArray(rates)) {
-            await Promise.all(rates.map(async (rate: any) => {
-              await RateModel.insertRate(rate.title, rate.note, nouveauFormulaire.id);
-            }));
-          }
-      
-          // Répondre avec succès
-          res.status(201).json({ message: 'Formulaire créé avec succès' });
+            const { nom_formulaire, nom_client, commercial_id, data } = req.body;
+
+            if (!data || !Array.isArray(data) || data.length === 0) {
+                throw new Error('Aucune donnée valide fournie');
+            }
+
+            const { questions, textareas, rates } = data[0];
+
+            const nouveauFormulaire = await FormulaireModel.insertFormulaire(nom_formulaire, nom_client, commercial_id);
+
+            // Insérer les questions de manière séquentielle
+            for (const question of questions) {
+                await QuestionModel.insertQuestion(question.title, question.response, nouveauFormulaire.id);
+            }
+
+            // Insérer les textareas de manière séquentielle
+            for (const textarea of textareas) {
+                await TextareaModel.insertTextarea(textarea.title, textarea.response, nouveauFormulaire.id);
+            }
+
+            // Insérer les rates de manière séquentielle
+            for (const rate of rates) {
+                await RateModel.insertRate(rate.title, rate.note, nouveauFormulaire.id);
+            }
+
+            res.status(201).json({ message: 'Formulaire créé avec succès' });
         } catch (error) {
-          console.error('Erreur lors de la création du formulaire :', error);
-          res.status(500).json({ error: 'Erreur lors de la création du formulaire' });
+            console.error('Erreur lors de la création du formulaire :', error);
+            res.status(500).json({ error: 'Erreur lors de la création du formulaire' });
         }
-      },
-      
-  };
+    },
+
+    validateToken: (req: Request, res: Response) => {
+      const token = req.query.token as string; 
+      if (!token) {
+          return res.status(400).json({ isValid: false, error: 'Token manquant' });
+      }
   
+      if (!SECRET_KEY) {
+          return res.status(500).json({ isValid: false, error: 'Clé secrète manquante' });
+      }
   
-  export default formController;
+      jwt.verify(token, SECRET_KEY, (err, decoded) => {
+          if (err) {
+              return res.status(401).json({ isValid: false, error: 'Token invalide ou expiré' });
+          }
+  
+          return res.json({ isValid: true, data: decoded });
+      });
+  },
+
+  sendForm: async (req: any, res: any, next: any) => {
+    try {
+    const { email } = req.body;
+    console.log(email);
+
+    // Générer un token JWT avec une durée de validité de 7 jours
+    const token = jwt.sign({ email }, process.env.SECRET_KEY!, { expiresIn: '7d' });
+
+    // Construire le lien d'accès à la page de formulaire avec le token inclus
+    const formLink = `${process.env.FORM_PAGE}/form-satisfaction?token=${token}`;
+    //const formLink = `http://localhost:5173/form-satisfaction?token=${token}`;
+
+    // Envoyer l'e-mail contenant le lien d'accès à la page de formulaire
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
+      const msg = {
+        to: email,
+        from: "immoprosoclock@gmail.com",
+        subject: "Formulaire de satisfaction",
+        text: `Bonjour, voici le lien vers notre formulaire de satisfaction, valable 7 jours : ${formLink}`,
+      };
+      sgMail
+        .send(msg)
+        .then(() => {
+            console.log("Email envoyé");
+            res.status(200).json({ message: "Email envoyé avec succès" }); 
+          
+        })
+        .catch((error) => {
+          console.error(error);
+          res.status(500).json({ message: "Erreur lors de l'envoi de l'e-mail" }); 
+        });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json("Erreur interne du serveur");
+    }
+  },
+
+
+};
+
+export default formController;

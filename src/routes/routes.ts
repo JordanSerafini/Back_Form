@@ -1,8 +1,8 @@
 import express from "express";
 import Controller from "../controllers/appController/controller";
-import AuthController from "../controllers/appController/authController";
+import AuthController from "../controllers/Support/authController";
 import UserProController from "../controllers/appController/userProController";
-import supportController from "../controllers/appController/supportController";
+import supportController from "../controllers/Support/supportController";
 import customerEBPController from "../controllers/EBP_API/customerController";
 import tableController from "../controllers/EBP_API/tableController";
 import swapController from "../controllers/appController/swapController";
@@ -30,6 +30,7 @@ router.get('/', (req, res) => {
 
 // Route login
 router.post('/login', AuthController.loginWithEmailPassword)
+router.get('/verifyToken', AuthController.verifyToken)
 
 // Route créer utilisateur de l'app
 router.post('/createUser', UserProController.createUser)
@@ -53,7 +54,6 @@ router.post('/insertCoordinate', cusctomerController.insertCoordinate)
 
 // Route Formulaire satisfaction
 router.post('/insertData', Controller.insertData);
-router.post('/sendForm', supportController.sendForm);
 
 // Route pour récupérer les Events
 router.get('/event', eventController.getAllevent)
@@ -111,5 +111,8 @@ router.get('/getitembycaption', fullSwapController.getItemByCaption)
 
 // Formulaire de satisfaction
 router.post('/createFormulaire', formController.createFormulaire)
+router.get('/validateToken', formController.validateToken)
+router.post('/sendForm', formController.sendForm);
+
 
 export default router
