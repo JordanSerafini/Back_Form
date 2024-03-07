@@ -1,5 +1,5 @@
-import { pool } from '../database/client/pool';
-import Model from './model';
+import { pool } from '../../database/client/pool';
+import Model from '../model';
 import bcrypt from 'bcrypt';
 
 class UserProModel extends Model{
