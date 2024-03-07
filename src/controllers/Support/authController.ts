@@ -51,6 +51,7 @@ class AuthController {
       res.status(401).json({ message: 'No token provided' });
       return;
     }
+    console.log(token);
   
     try {
       // Vérifier si le token est dans la liste noire
