@@ -45,8 +45,9 @@ class AuthController {
 
 
   public static async verifyToken(req: Request, res: Response): Promise<void> {
-    const token = req.headers.authorization?.split(' ')[1];
-    console.log(token);
+    // Extraction du token de l'URL
+    const token = req.query.token as string;
+    console.log(req.query);
     if (!token) {
       res.status(401).json({ message: 'No token provided' });
       return;
@@ -71,6 +72,8 @@ class AuthController {
       res.status(401).json({ message: 'Invalid token' });
     }
   };
+
+
   
 
   public static async invalidateToken(req: Request, res: Response): Promise<void> {
