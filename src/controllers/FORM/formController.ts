@@ -12,7 +12,7 @@ const SECRET_KEY = process.env.SECRET_KEY ;
 
 const formController = {
     createFormulaire: async (req: Request, res: Response) => {
-        console.log(req.body);
+       // console.log(req.body);
         try {
             const {  nom_client, commercial_id, data } = req.body;
             const nom_formulaire = `Formulaire de satisfaction de ${nom_client}`;
@@ -72,7 +72,6 @@ const formController = {
   sendForm: async (req: any, res: any, next: any) => {
     try {
     const { email } = req.body;
-    console.log(email);
 
     // Générer un token JWT avec une durée de validité de 7 jours
     const token = jwt.sign({ email }, process.env.SECRET_KEY!, { expiresIn: '7d' });
