@@ -53,7 +53,6 @@ class AuthController {
       res.status(401).json({ message: 'No token provided' });
       return;
     }
-    console.log(token);
 
     try {
       // Vérifier si le token est dans la liste noire
@@ -69,10 +68,17 @@ class AuthController {
       // Token valide
       res.status(200).json({ message: 'Token is valid', decoded });
     } catch (error) {
-      console.error('Error verifying token:', error);
-      res.status(401).json({ message: 'Invalid token' });
+      if (error instanceof jwt.TokenExpiredError) {
+        res.status(401).json({ message: 'Token expired' });
+      } else if (error instanceof jwt.JsonWebTokenError) {
+        res.status(401).json({ message: 'Invalid token' });
+      } else {
+        console.error('Error verifying token:', error);
+        res.status(500).json({ message: 'Internal server error' });
+      }
     }
-};
+  };
+    
   
 
 
