@@ -45,41 +45,37 @@ class AuthController {
 
 
   public static async verifyToken(req: Request, res: Response): Promise<void> {
+    // Désactiver la mise en cache pour cette réponse
+    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
+
     // Extraction du token de l'URL
     const token = req.query.token as string;
     if (!token) {
       res.status(401).json({ message: 'No token provided' });
       return;
     }
-    //console.log(token);
-  
+
     try {
       // Vérifier si le token est dans la liste noire
       const blacklistQuery = 'SELECT * FROM blacklisted_tokens WHERE token = $1';
       const blacklistResult = await pool.query(blacklistQuery, [token]);
-      //console.log(blacklistResult.rows.length);
       if (blacklistResult.rows.length > 0) {
         res.status(401).json({ message: 'Token is blacklisted' });
         return;
       }
-  
+
       const decoded = jwt.verify(token, AuthController.secretKey);
-      console.log(decoded);
-  
+
       // Token valide
       res.status(200).json({ message: 'Token is valid', decoded });
     } catch (error) {
       console.error('Error verifying token:', error);
-      // Spécifier le type d'erreur peut aider au débogage
-      if (error instanceof jwt.TokenExpiredError) {
-        res.status(401).json({ message: 'Token expired' });
-      } else if (error instanceof jwt.JsonWebTokenError) {
-        res.status(401).json({ message: 'Invalid token' });
-      } else {
-        res.status(500).json({ message: 'Internal server error' });
-      }
+      res.status(401).json({ message: 'Invalid token' });
     }
-  };    
+};
+  
 
 
   
