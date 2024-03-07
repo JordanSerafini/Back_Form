@@ -5,5 +5,6 @@ dotenv.config();
 
 export const pool = new Pool({
   connectionString: process.env.FORM_URL,
+  max: 10,
 }
   );

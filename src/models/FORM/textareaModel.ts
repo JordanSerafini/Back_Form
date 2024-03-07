@@ -11,7 +11,14 @@ class TextareaModel extends Model {
       VALUES ($1, $2, $3);
     `;
     const params = [title, response, formulaire_id];
+    try {
     await this.run(sql, params);
+    console.log('Textarea insérée avec succès:', { title, response, formulaire_id });
+    } catch (error) {
+    console.error('Erreur lors de l\'insertion de la textarea:', {title}, error);
+    throw error;
+    }
+    
   }
 }
 

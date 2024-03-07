@@ -11,7 +11,13 @@ class RateModel extends Model {
       VALUES ($1, $2, $3);
     `;
     const params = [title, note, formulaire_id];
+    try {
     await this.run(sql, params);
+    console.log('Rate insérée avec succès:', { title, note, formulaire_id });
+    } catch (error) {
+    console.error('Erreur lors de l\'insertion de la rate:', {title}, error);
+    throw error;
+    }
   }
 }
 

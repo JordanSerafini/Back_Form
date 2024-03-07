@@ -11,7 +11,14 @@ class QuestionModel extends Model {
       VALUES ($1, $2, $3);
     `;
     const params = [title, response, formulaire_id];
-    await this.run(sql, params);
+    
+    try {
+      await this.run(sql, params);
+      console.log('Question insérée avec succès:', { title, response, formulaire_id });
+    } catch (error) {
+      console.error('Erreur lors de l\'insertion de la question:', {title}, error);
+      throw error;
+    }
   }
 }
 
