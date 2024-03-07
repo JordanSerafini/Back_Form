@@ -20,10 +20,12 @@ const formController = {
             if (!data || !Array.isArray(data) || data.length === 0) {
                 throw new Error('Aucune donnée valide fournie');
             }
+            console.log("1");
 
             const { questions, textareas, rates } = data[0];
 
             const nouveauFormulaire = await FormulaireModel.insertFormulaire(nom_formulaire, nom_client, commercial_id);
+            console.log("2");
 
             // Insérer les questions de manière séquentielle
             for (const question of questions) {
@@ -39,6 +41,7 @@ const formController = {
             for (const rate of rates) {
                 await RateModel.insertRate(rate.title, rate.note, nouveauFormulaire.id);
             }
+            console.log("3");
 
             res.status(201).json({ message: 'Formulaire créé avec succès' });
         } catch (error) {
