@@ -14,7 +14,8 @@ const formController = {
     createFormulaire: async (req: Request, res: Response) => {
         console.log(req.body);
         try {
-            const { nom_formulaire, nom_client, commercial_id, data } = req.body;
+            const {  nom_client, commercial_id, data } = req.body;
+            const nom_formulaire = `Formulaire de satisfaction de ${nom_client}`;
 
             if (!data || !Array.isArray(data) || data.length === 0) {
                 throw new Error('Aucune donnée valide fournie');
