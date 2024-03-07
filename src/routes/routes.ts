@@ -3,7 +3,6 @@ import Controller from "../controllers/controller";
 import AuthController from "../controllers/authController";
 import UserProController from "../controllers/userProController";
 import supportController from "../controllers/supportController";
-import formController from "../controllers/formController";
 import customerEBPController from "../controllers/EBP_API/customerController";
 import tableController from "../controllers/EBP_API/tableController";
 import swapController from "../controllers/swapController";
@@ -15,6 +14,7 @@ import CreateTableController from "../controllers/EBP_API/createTableController"
 import indexController from "../DB_SWAP/indexController";
 import fullSwapController from "../DB_SWAP/fullSwapController";
 
+import formController from "../controllers/FORM/formController";
 import swapEbpController from "../DB_SWAP/swapControllerEbp";
 
 import isToken from "../middleware/isToken";
@@ -59,10 +59,6 @@ router.post('/sendForm', supportController.sendForm);
 router.get('/event', eventController.getAllevent)
 router.post('/insertEvent', eventController.insertEvent)
 router.delete('/deleteEvent/:id', eventController.deleteEvent)
-
-
-// Route pour vérifier le token
-router.get('/validateToken', formController.validateToken);
 
 
 
@@ -112,5 +108,8 @@ router.get('/itemNew', fullSwapController.getAllItem)
 router.post('/editItemStock', fullSwapController.editItemStock)
 router.delete('/deleteItem', fullSwapController.deleteItem)
 router.get('/getitembycaption', fullSwapController.getItemByCaption)
+
+// Formulaire de satisfaction
+router.post('/createFormulaire', formController.createFormulaire)
 
 export default router
