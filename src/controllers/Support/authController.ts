@@ -47,6 +47,7 @@ class AuthController {
 
   public static async verifyToken(req: Request, res: Response): Promise<void> {
 
+    res.setHeader('Cache-Control', 'no-store');
 
     // Extraction du token de l'URL
     const token = req.query.token as string;
