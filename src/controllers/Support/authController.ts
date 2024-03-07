@@ -46,22 +46,32 @@ class AuthController {
 
   public static async verifyToken(req: Request, res: Response): Promise<void> {
     const token = req.headers.authorization?.split(' ')[1];
-
+  
     if (!token) {
       res.status(401).json({ message: 'No token provided' });
       return;
     }
-
+  
     try {
+      // Vérifier si le token est dans la liste noire
+      const blacklistQuery = 'SELECT * FROM blacklisted_tokens WHERE token = $1';
+      const blacklistResult = await pool.query(blacklistQuery, [token]);
+      if (blacklistResult.rows.length > 0) {
+        // Token présent dans la liste noire, considéré comme invalide
+        res.status(401).json({ message: 'Token is blacklisted' });
+        return;
+      }
+  
       const decoded = jwt.verify(token, AuthController.secretKey);
-
+  
       // Token valide
       res.status(200).json({ message: 'Token is valid', decoded });
     } catch (error) {
-      console.error('Erreur lors de la vérification du token :', error);
+      console.error('Error verifying token:', error);
       res.status(401).json({ message: 'Invalid token' });
     }
   };
+  
 
   public static async invalidateToken(req: Request, res: Response): Promise<void> {
     const token = req.headers.authorization?.split(' ')[1];
