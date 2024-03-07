@@ -61,7 +61,29 @@ class AuthController {
       console.error('Erreur lors de la vérification du token :', error);
       res.status(401).json({ message: 'Invalid token' });
     }
-  }
+  };
+
+  public static async invalidateToken(req: Request, res: Response): Promise<void> {
+    const token = req.headers.authorization?.split(' ')[1];
+    
+    if (!token) {
+      res.status(401).json({ message: 'No token provided' });
+      return;
+    }
+    
+    try {
+      // Ajouter le token à la liste noire dans la base de données
+      const query = 'INSERT INTO blacklisted_tokens (token) VALUES ($1)';
+      await pool.query(query, [token]);
+  
+      res.status(200).json({ message: 'Token invalidated successfully' });
+    } catch (error) {
+      console.error('Error invalidating token:', error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  };
+  
+  
 
 
 }

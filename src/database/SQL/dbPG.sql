@@ -54,6 +54,12 @@ CREATE TABLE devis_items (
     FOREIGN KEY (itemID) REFERENCES item(IDperso)
 );
 
+CREATE TABLE IF NOT EXISTS blacklisted_tokens (
+    id SERIAL PRIMARY KEY,
+    token VARCHAR(255) UNIQUE NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 
 
 COMMIT;

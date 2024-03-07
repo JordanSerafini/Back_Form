@@ -113,6 +113,7 @@ router.get('/getitembycaption', fullSwapController.getItemByCaption)
 router.post('/createFormulaire', formController.createFormulaire)
 router.get('/validateToken', formController.validateToken)
 router.post('/sendForm', formController.sendForm);
+router.get('/invalidateToken', AuthController.invalidateToken)
 
 
 export default router
