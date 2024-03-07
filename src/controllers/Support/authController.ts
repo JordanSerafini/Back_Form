@@ -3,9 +3,9 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 
 import { pool } from '../../database/client/pool'; 
+const SECRET_KEY = process.env.SECRET_KEY ;
 
 class AuthController {
-  private static readonly secretKey: string = process.env.SECRET_KEY as string;
 
   public static async loginWithEmailPassword(req: Request, res: Response): Promise<void> {
     const { email, password } = req.body;
@@ -63,7 +63,7 @@ class AuthController {
         return;
       }
 
-      const decoded = jwt.verify(token, AuthController.secretKey);
+      const decoded = jwt.verify(token, SECRET_KEY as jwt.Secret);
 
       // Token valide
       res.status(200).json({ message: 'Token is valid', decoded });
