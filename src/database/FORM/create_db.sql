@@ -17,20 +17,30 @@ CREATE TABLE Formulaires (
     commercial_id INTEGER REFERENCES Users(id) ON DELETE SET NULL
 );
 
--- Création de la table Parties qui font partie d'un formulaire
-CREATE TABLE Parties (
-    id SERIAL PRIMARY KEY,
-    nom_partie VARCHAR(255) NOT NULL,
-    formulaire_id INTEGER REFERENCES Formulaires(id) ON DELETE CASCADE
-);
 
 -- Création de la table Questions qui font partie d'une partie de formulaire
 CREATE TABLE Questions (
     id SERIAL PRIMARY KEY,
-    reponse TEXT,
-    note INTEGER,
-    partie_id INTEGER REFERENCES Parties(id) ON DELETE CASCADE
+    title TEXT,
+    response TEXT,
+    formulaire_id INTEGER REFERENCES Formulaires(id) ON DELETE CASCADE
 );
+
+CREATE TABLE Textarea (
+    id SERIAL PRIMARY KEY,
+    title TEXT,
+    response TEXT,
+    formulaire_id INTEGER REFERENCES Formulaires(id) ON DELETE CASCADE
+);
+
+CREATE TABLE Rate (
+    id SERIAL PRIMARY KEY,
+    title TEXT,
+    note INTEGER ,
+    formulaire_id INTEGER REFERENCES Formulaires(id) ON DELETE CASCADE
+);
+
+
 
 
 COMMIT;
