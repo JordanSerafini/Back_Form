@@ -1,5 +1,5 @@
-import { pool } from "../../database/pool";
-import client from "../../database/client";
+import { pool } from "../../database/client/pool";
+import client from "../../database/client/client";
 
 /* CASE 
                  

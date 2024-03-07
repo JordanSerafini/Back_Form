@@ -1,4 +1,4 @@
-import client from "../../database/client";
+import client from "../../database/client/client";
 
 const tableController = {
   // Fonction pour obtenir la liste des tables

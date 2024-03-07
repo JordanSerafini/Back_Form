@@ -1,14 +1,14 @@
 // Importez uniquement ce dont vous avez besoin
-import { executeQuery } from "../database/clientPGlocal"; // Client base de donnée PostgreSQL de destinat
-import client from "../database/client"; // Client base de donnée Microsoft SQL Server de base
-import {pool} from "../database/pool"; // Client base de donnée PostgreSQL de destination
+import { executeQuery } from "../database/client/clientPGlocal"; // Client base de donnée PostgreSQL de destinat
+import client from "../database/client/client"; // Client base de donnée Microsoft SQL Server de base
+import {pool} from "../database/client/pool"; // Client base de donnée PostgreSQL de destination
 import indexController from "./indexController";
 import {
   executeScriptsOnPostgres,
   generatePostgresSchema,
 } from "./functionEBP-2";
 
-import {pgClient} from "../database/clientPGlocal"; 
+import {pgClient} from "../database/client/clientPGlocal"; 
 
 interface TableAndColumns {
   tableName: string;

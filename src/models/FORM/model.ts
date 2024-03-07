@@ -1,6 +1,6 @@
-import { pool } from '../database/client/pool';
+import { pool } from '../../database/client/formPool';
 
-class Model {
+class formModel {
   constructor() {}
 
   protected static async query(sql: string, params: any[] = []): Promise<any> {
@@ -50,4 +50,4 @@ class Model {
   }
 }
 
-export default Model;
+export default formModel;

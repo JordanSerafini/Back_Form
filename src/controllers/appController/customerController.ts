@@ -1,5 +1,5 @@
-import {pool} from "../database/pool";
-import coordinateService from "../services/coordinateService";
+import {pool} from "../../database/client/pool";
+import coordinateService from "../../services/coordinateService";
 
 
 const customerController = {

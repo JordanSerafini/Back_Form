@@ -1,4 +1,4 @@
-import {pool} from "../database/pool";
+import {pool} from "../../database/client/pool";
 
 const eventController = {
     async getAllevent(req: any, res: any) {

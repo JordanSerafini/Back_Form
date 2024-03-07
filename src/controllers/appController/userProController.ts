@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt'; 
-import { pool } from '../database/pool'; 
+import { pool } from '../../database/client/pool'; 
 import jwt from 'jsonwebtoken';
 
 class UserProController {

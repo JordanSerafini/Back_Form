@@ -1,4 +1,4 @@
-import client from "../../database/client";
+import client from "../../database/client/client";
 
 const itemController = {
 

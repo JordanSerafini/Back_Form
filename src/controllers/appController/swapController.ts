@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import client from "../database/client";
-import { pool } from "../database/pool";
+import client from "../../database/client/client";
+import { pool } from "../../database/client/pool";
 
 
 const swapController = {

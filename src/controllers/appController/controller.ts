@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import CommentModel from "../models/commentModel";
-import QuestionModel from "../models/questionModel";
-import UserModel from "../models/userModel";
+import CommentModel from "../../models/oldForm/commentModel";
+import QuestionModel from "../../models/oldForm/questionModel";
+import UserModel from "../../models/oldForm/userModel";
 
 class Controller {
   

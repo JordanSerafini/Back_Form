@@ -1,4 +1,4 @@
-import { pool } from '../database/pool';
+import { pool } from '../database/client/pool';
 import Model from './model';
 
 class FormModel extends Model {

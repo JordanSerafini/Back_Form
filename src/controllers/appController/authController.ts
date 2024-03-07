@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 
-import { pool } from '../database/pool'; 
+import { pool } from '../../database/client/pool'; 
 
 class AuthController {
   private static readonly secretKey: string = process.env.SECRET_KEY as string;

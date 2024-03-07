@@ -1,5 +1,5 @@
-import { pool } from '../database/pool';
-import Model from './model';
+import { pool } from '../../database/client/pool';
+import Model from '../model';
 
 class UserModel extends Model{
   public id: number;

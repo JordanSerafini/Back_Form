@@ -1,5 +1,5 @@
 import { IRecordSet } from "mssql";
-import client from "../database/client";
+import client from "../database/client/client";
 
 const indexController = {
     async listTables(_: any, res: { send: (arg0: IRecordSet<any>) => void; }) {

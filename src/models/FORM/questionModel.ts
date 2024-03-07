@@ -1,4 +1,4 @@
-import Model from '../model';
+import Model from './model';
 
 class QuestionModel extends Model {
   constructor() {
