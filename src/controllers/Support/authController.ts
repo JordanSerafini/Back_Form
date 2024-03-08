@@ -72,6 +72,35 @@ class AuthController {
     }
 };
 
+public static async verifyTokenHeader(req: Request, res: Response): Promise<Response<any, Record<string, any>> | void> {
+  const token = req.headers.authorization?.split(' ')[1];
+  
+  if (!token) {
+    return res.status(401).json({ message: 'Aucun token fourni' });
+  }
+
+  try {
+    const blacklistQuery = 'SELECT * FROM blacklisted_tokens WHERE token = $1';
+    const blacklistResult = await pool.query(blacklistQuery, [token]);
+    if (blacklistResult.rows.length > 0) {
+      return res.status(401).json({ message: 'Token sur liste noire' });
+    }
+
+    let decoded;
+    try {
+      decoded = jwt.verify(token, AuthController.secretKey);
+    } catch (error) {
+      console.error('Erreur lors de la vérification du token :', error);
+      return res.status(401).json({ message: 'Token invalide' });
+    }
+    //console.log(decoded);
+    return res.status(200).json({ message: 'Token valide', decoded });
+  } catch (error) {
+    console.error('Erreur lors de la vérification du token :', error);
+    return res.status(500).json({ message: 'Erreur interne du serveur' });
+  }
+};
+
 
 
   public static async invalidateToken(req: Request, res: Response): Promise<void> {

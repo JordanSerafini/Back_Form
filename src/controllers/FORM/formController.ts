@@ -6,6 +6,7 @@ import FormulaireModel from '../../models/FORM/formulaireModel';
 import QuestionModel from '../../models/FORM/questionModel';
 import TextareaModel from '../../models/FORM/textareaModel';
 import RateModel from '../../models/FORM/rateModel';
+import AuthController from '../Support/authController';
 
 const SECRET_KEY = process.env.SECRET_KEY;
 
@@ -61,7 +62,6 @@ const formController = {
             return res.status(400).json({ isValid: false, error: 'Format du token invalide' });
         }
     
-        console.log(token);
     
         if (!SECRET_KEY) {
             return res.status(500).json({ isValid: false, error: 'Clé secrète manquante' });
@@ -71,7 +71,7 @@ const formController = {
             if (err) {
                 return res.status(401).json({ isValid: false, error: 'Token invalide ou expiré' });
             }
-    
+            AuthController.verifyTokenHeader(req, res);
             return res.json({ isValid: true, data: decoded });
         });
     },
