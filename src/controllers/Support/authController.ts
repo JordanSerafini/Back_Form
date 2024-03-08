@@ -45,41 +45,36 @@ class AuthController {
   };
 
 
-  public static async verifyToken(req: Request, res: Response): Promise<void> {
-
-    res.setHeader('Cache-Control', 'no-store');
-
-    // Extraction du token de l'URL
+  public static async verifyToken(req: Request, res: Response): Promise<Response<any, Record<string, any>> | void> {
+    console.log('req.query', req.query);
     const token = req.query.token as string;
+    console.log('token', token);
     if (!token) {
-      res.status(401).json({ message: 'No token provided' });
-      return;
+        return res.status(401).json({ message: 'Aucun token fourni' });
     }
 
     try {
-      // Vérifier si le token est dans la liste noire
-      const blacklistQuery = 'SELECT * FROM blacklisted_tokens WHERE token = $1';
-      const blacklistResult = await pool.query(blacklistQuery, [token]);
-      if (blacklistResult.rows.length > 0) {
-        res.status(401).json({ message: 'Token is blacklisted' });
-        return;
-      }
+        const blacklistQuery = 'SELECT * FROM blacklisted_tokens WHERE token = $1';
+        const blacklistResult = await pool.query(blacklistQuery, [token]);
+        if (blacklistResult.rows.length > 0) {
+            return res.status(401).json({ message: 'Token sur liste noire' });
+        }
 
-      const decoded = jwt.verify(token, AuthController.secretKey);
-
-      // Token valide
-      res.status(200).json({ message: 'Token is valid', decoded });
+        const decoded = jwt.verify(token, AuthController.secretKey);
+        return res.status(200).json({ message: 'Token valide', decoded });
     } catch (error) {
-      if (error instanceof jwt.TokenExpiredError) {
-        res.status(401).json({ message: 'Token expired' });
-      } else if (error instanceof jwt.JsonWebTokenError) {
-        res.status(401).json({ message: 'Invalid token' });
-      } else {
-        console.error('Error verifying token:', error);
-        res.status(500).json({ message: 'Internal server error' });
-      }
+        if (error instanceof jwt.TokenExpiredError) {
+            return res.status(401).json({ message: 'Token expiré' });
+        } else if (error instanceof jwt.JsonWebTokenError) {
+            return res.status(401).json({ message: 'Token invalide' });
+        } else {
+            console.error('Erreur lors de la vérification du token :', error);
+            return res.status(500).json({ message: 'Erreur interne du serveur' });
+        }
     }
-  };
+};
+
+
     
   
 

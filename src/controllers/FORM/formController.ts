@@ -48,23 +48,26 @@ const formController = {
     },
 
     validateToken: (req: Request, res: Response) => {
-      const token = req.query.token as string; 
-      if (!token) {
-          return res.status(400).json({ isValid: false, error: 'Token manquant' });
-      }
-  
-      if (!SECRET_KEY) {
-          return res.status(500).json({ isValid: false, error: 'Clé secrète manquante' });
-      }
-  
-      jwt.verify(token, SECRET_KEY, (err, decoded) => {
-          if (err) {
-              return res.status(401).json({ isValid: false, error: 'Token invalide ou expiré' });
-          }
-  
-          return res.json({ isValid: true, data: decoded });
-      });
-  },
+        const authorizationHeader = req.headers['authorization'];
+        if (!authorizationHeader || !authorizationHeader.startsWith('Bearer ')) {
+            return res.status(400).json({ isValid: false, error: 'Token manquant dans le header Authorization' });
+        }
+    
+        const token = authorizationHeader.split(' ')[1]; // Extraction du token du header
+    
+        if (!SECRET_KEY) {
+            return res.status(500).json({ isValid: false, error: 'Clé secrète manquante' });
+        }
+    
+        jwt.verify(token, SECRET_KEY, (err, decoded) => {
+            if (err) {
+                return res.status(401).json({ isValid: false, error: 'Token invalide ou expiré' });
+            }
+    
+            return res.json({ isValid: true, data: decoded });
+        });
+    },
+    
 
   sendForm: async (req: any, res: any, next: any) => {
     try {
