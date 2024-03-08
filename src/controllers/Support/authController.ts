@@ -3,7 +3,6 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 
 import { pool } from '../../database/client/pool'; 
-const SECRET_KEY = process.env.SECRET_KEY ;
 
 class AuthController {
   private static readonly secretKey: string = process.env.SECRET_KEY as string;
