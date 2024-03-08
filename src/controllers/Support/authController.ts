@@ -64,7 +64,7 @@ class AuthController {
             console.error('Erreur lors de la vérification du token :', error);
             return res.status(401).json({ message: 'Token invalide' });
         }
-        console.log(decoded);
+        //console.log(decoded);
         return res.status(200).json({ message: 'Token valide', decoded });
     } catch (error) {
         console.error('Erreur lors de la vérification du token :', error);
@@ -74,14 +74,9 @@ class AuthController {
 
 
 
-    
-  
-
-
-  
-
   public static async invalidateToken(req: Request, res: Response): Promise<void> {
     const token = req.headers.authorization?.split(' ')[1];
+    console.log(token);
     
     if (!token) {
       res.status(401).json({ message: 'No token provided' });
