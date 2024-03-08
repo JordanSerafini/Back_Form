@@ -46,9 +46,7 @@ class AuthController {
 
 
   public static async verifyToken(req: Request, res: Response): Promise<Response<any, Record<string, any>> | void> {
-    console.log('req.query', req.query);
     const token = req.query.token as string;
-    console.log('token', token);
     if (!token) {
         return res.status(401).json({ message: 'Aucun token fourni' });
     }
@@ -60,19 +58,21 @@ class AuthController {
             return res.status(401).json({ message: 'Token sur liste noire' });
         }
 
-        const decoded = jwt.verify(token, AuthController.secretKey);
+        let decoded;
+        try {
+            decoded = jwt.verify(token, AuthController.secretKey);
+        } catch (error) {
+            console.error('Erreur lors de la vérification du token :', error);
+            return res.status(401).json({ message: 'Token invalide' });
+        }
+
         return res.status(200).json({ message: 'Token valide', decoded });
     } catch (error) {
-        if (error instanceof jwt.TokenExpiredError) {
-            return res.status(401).json({ message: 'Token expiré' });
-        } else if (error instanceof jwt.JsonWebTokenError) {
-            return res.status(401).json({ message: 'Token invalide' });
-        } else {
-            console.error('Erreur lors de la vérification du token :', error);
-            return res.status(500).json({ message: 'Erreur interne du serveur' });
-        }
+        console.error('Erreur lors de la vérification du token :', error);
+        return res.status(500).json({ message: 'Erreur interne du serveur' });
     }
 };
+
 
 
     
