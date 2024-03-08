@@ -48,13 +48,14 @@ const formController = {
     },
 
     validateTokenHeader: (req: Request, res: Response) => {
+        console.log(req.headers);
         const authorizationHeader = req.headers['authorization'];
         if (!authorizationHeader || !authorizationHeader.startsWith('Bearer ')) {
             return res.status(400).json({ isValid: false, error: 'Token manquant dans le header Authorization' });
         }
     
         const token = authorizationHeader.split(' ')[1]; // Extraction du token du header
-    
+        console.log(token);
         if (!SECRET_KEY) {
             return res.status(500).json({ isValid: false, error: 'Clé secrète manquante' });
         }
@@ -75,6 +76,8 @@ const formController = {
 
     // Générer un token JWT avec une durée de validité de 7 jours
     const token = jwt.sign({ email }, process.env.SECRET_KEY!, { expiresIn: '7d' });
+
+    console.log(token);
 
     // Construire le lien d'accès à la page de formulaire avec le token inclus
     const formLink = `${process.env.FORM_PAGE}/form-satisfaction?token=${token}`;
