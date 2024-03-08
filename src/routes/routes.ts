@@ -30,7 +30,7 @@ router.get('/', (req, res) => {
 
 // Route login
 router.post('/login', AuthController.loginWithEmailPassword)
-router.get('/verifyToken', AuthController.verifyToken)
+router.get('/verifyToken', AuthController.verifyTokenParams) // Params URL
 
 // Route créer utilisateur de l'app
 router.post('/createUser', UserProController.createUser)
@@ -111,7 +111,7 @@ router.get('/getitembycaption', fullSwapController.getItemByCaption)
 
 // Formulaire de satisfaction
 router.post('/createFormulaire', formController.createFormulaire)
-router.get('/validateToken', formController.validateToken)
+router.get('/validateTokenHeader', formController.validateTokenHeader)
 router.post('/sendForm', formController.sendForm);
 router.get('/invalidateToken', AuthController.invalidateToken)
 

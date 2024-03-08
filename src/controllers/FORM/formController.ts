@@ -7,7 +7,7 @@ import QuestionModel from '../../models/FORM/questionModel';
 import TextareaModel from '../../models/FORM/textareaModel';
 import RateModel from '../../models/FORM/rateModel';
 
-const SECRET_KEY = process.env.SECRET_KEY ;
+const SECRET_KEY = process.env.SECRET_KEY;
 
 
 const formController = {
@@ -47,7 +47,7 @@ const formController = {
         }
     },
 
-    validateToken: (req: Request, res: Response) => {
+    validateTokenHeader: (req: Request, res: Response) => {
         const authorizationHeader = req.headers['authorization'];
         if (!authorizationHeader || !authorizationHeader.startsWith('Bearer ')) {
             return res.status(400).json({ isValid: false, error: 'Token manquant dans le header Authorization' });

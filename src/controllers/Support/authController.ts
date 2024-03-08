@@ -45,7 +45,7 @@ class AuthController {
   };
 
 
-  public static async verifyToken(req: Request, res: Response): Promise<Response<any, Record<string, any>> | void> {
+  public static async verifyTokenParams(req: Request, res: Response): Promise<Response<any, Record<string, any>> | void> {
     const token = req.query.token as string;
     if (!token) {
         return res.status(401).json({ message: 'Aucun token fourni' });
