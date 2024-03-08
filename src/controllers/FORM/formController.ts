@@ -71,7 +71,7 @@ const formController = {
             if (err) {
                 return res.status(401).json({ isValid: false, error: 'Token invalide ou expiré' });
             }
-            AuthController.verifyTokenHeader(req, res);
+           // AuthController.verifyTokenHeader(req, res);
             return res.json({ isValid: true, data: decoded });
         });
     },
