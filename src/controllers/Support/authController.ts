@@ -64,7 +64,7 @@ class AuthController {
             console.error('Erreur lors de la vérification du token :', error);
             return res.status(401).json({ message: 'Token invalide' });
         }
-
+        console.log(decoded);
         return res.status(200).json({ message: 'Token valide', decoded });
     } catch (error) {
         console.error('Erreur lors de la vérification du token :', error);
