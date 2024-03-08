@@ -51,11 +51,18 @@ const formController = {
         console.log(req.headers);
         const authorizationHeader = req.headers['authorization'];
         if (!authorizationHeader || !authorizationHeader.startsWith('Bearer ')) {
-            return res.status(400).json({ isValid: false, error: 'Token manquant dans le header Authorization' });
+            return res.status(400).json({ isValid: false, error: 'Token manquant ou mal formé dans le header Authorization' });
         }
     
         const token = authorizationHeader.split(' ')[1]; // Extraction du token du header
+        
+        // Vérifier si le token commence par 'Bearer '
+        if (!/^Bearer /.test(authorizationHeader)) {
+            return res.status(400).json({ isValid: false, error: 'Format du token invalide' });
+        }
+    
         console.log(token);
+    
         if (!SECRET_KEY) {
             return res.status(500).json({ isValid: false, error: 'Clé secrète manquante' });
         }
